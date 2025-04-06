@@ -33,7 +33,7 @@ model User {
 
 model Person {
   uuid        String     @id @default(uuid())
-  client      Boolean
+  client      Boolean?
   supplier    Boolean?
   name        String
   email       String?
