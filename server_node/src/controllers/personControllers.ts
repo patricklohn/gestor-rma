@@ -6,7 +6,7 @@ async function createPerson(req: Request, res: Response){
     const {client,supplier,name,email,observation} = req.body;
     try { 
           if (!name) {
-            return res.status(400).json({ message: "O campo NOME é obrigatório!" });
+            res.status(400).json({ message: "O campo NOME é obrigatório!" });
           }
 
         const person = await prisma.person.create({
@@ -44,3 +44,22 @@ async function deletePerson(req: Request, res: Response){
         res.status(500).json({message: "Internal server error"})
     }
 }
+
+async function getAllPerson(req: Request, res: Response){
+    try {
+        const personAll = await prisma.person.findMany()
+        if(!personAll){
+            res.status(404).json({message: "Nenhuma pessoa encontrada!"})
+        }
+        res.json(personAll)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal server error"})
+    }
+}
+
+export default {
+    createPerson,
+    deletePerson,
+    getAllPerson
+} 
