@@ -64,6 +64,7 @@ async function getPersonById(req: Request, res: Response){
         const personUuid = await prisma.person.findMany({
             where: {uuid},
         })  
+        res.json(personUuid)
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Internal server error"})
@@ -84,6 +85,7 @@ async function updatePerson(req: Request, res: Response){
                 observation
             }
         })
+        res.status(200).json({message: "Pessoa atualizada com sucesso!", person: personUpdate})
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Internal server error"})
