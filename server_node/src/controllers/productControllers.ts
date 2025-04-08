@@ -15,6 +15,8 @@ async function createProduct(req: Request, res: Response){
                 observation
             }
         })
+
+        res.status(201).json({message: "Produto criado com sucesso!", product: productCreate})
     } catch (error) {
         console.error(error);
         res.status(500).json({message: "Internal server error"});
@@ -80,6 +82,7 @@ async function updateProduct(req: Request, res: Response){
                 observation
             }
         })
+        res.status(200).json({message: "Produto atualizado com sucesso!", product: productUpdate})
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Internal server error"})
