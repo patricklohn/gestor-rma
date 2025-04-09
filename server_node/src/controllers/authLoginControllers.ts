@@ -40,6 +40,6 @@ async function loginUser(req: Request , res: Response){
 }
 
 export default {
-    loginUser
+    loginUser: async (req: Request, res: Response) => { /* ... */ }
 }
     
