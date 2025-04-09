@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
-async function login(req: Request,res: Response){
+async function loginUser(req: Request , res: Response){
     try {
         const {email, password} = req.body;
         const user = await prisma.user.findUnique({
@@ -38,3 +38,8 @@ async function login(req: Request,res: Response){
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+export default {
+    loginUser
+}
+    
