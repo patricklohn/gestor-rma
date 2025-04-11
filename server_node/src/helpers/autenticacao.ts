@@ -9,11 +9,13 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) =>{
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ message: "Nenhum Token informado" });
+        res.status(401).json({ message: "Nenhum Token informado" });
+        return 
     }
     jwt.verify(token, process.env.SECRET as string, (error, user) => {
         if (error) {
-          return res.status(403).json({ message: "Faleid to authenticate Token" });
+          res.status(403).json({ message: "Faleid to authenticate Token" });
+          return
         }
         (req as CustomRequest).user = user;
         next();
