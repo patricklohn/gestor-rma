@@ -17,7 +17,6 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) =>{
           res.status(403).json({ message: "Faleid to authenticate Token" });
           return
         }
-        (req as CustomRequest).user = user;
         next();
       });
 }
