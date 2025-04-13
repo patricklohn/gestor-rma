@@ -2,12 +2,17 @@ import express from "express";
 import cors from 'cors'; 
 import routes from "./routes/routes";
 import morgan from "morgan"; 
+import path from "path";
+import fs from "fs";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+
 app.use(morgan('dev'));
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+app.use(morgan('combined', { stream: accessLogStream }));
 
 //Rotas
 app.use("/", routes);
