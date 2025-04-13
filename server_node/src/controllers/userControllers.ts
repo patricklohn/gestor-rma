@@ -22,6 +22,12 @@ async function createUser(req: Request,res: Response){
             return
         }
 
+        const emailServer = await prisma.user.findMany({where:{email}})
+        if(emailServer){
+            res.status(400).json({message: "Email já esta em uso em outro usuario."})
+            return
+        }
+
         const hashedPassword = await cryptPassword(password);
         const userCreate = await prisma.user.create({
             data:{
