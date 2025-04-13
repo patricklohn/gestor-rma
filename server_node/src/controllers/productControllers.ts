@@ -7,6 +7,7 @@ async function createProduct(req: Request, res: Response){
     try {
         if(!description){
             res.status(400).json({message: "O campo DESCRIÇÃO é obrigatório!"})
+            return
         }
 
         const productCreate = await prisma.product.create({
@@ -28,6 +29,7 @@ async function getProductAll(req: Request, res: Response){
         const productAll = await prisma.product.findMany()
         if(!productAll){
             res.status(404).json({message: "Nenhum produto encontrado!"})
+            return
         } 
         res.json(productAll)
     } catch (error) {
@@ -44,6 +46,7 @@ async function getProductById(req: Request, res: Response){
         })
         if(!productId){
             res.status(404).json({message: "Nenhum produto encontrado com essa busca!"})
+            return
         } 
         res.json(productId)
     } catch (error) {
@@ -60,6 +63,7 @@ async function deleteProduct(req: Request, res: Response){
         })
         if(!productId){
             res.status(404).json({message: "Nenhum produto encontrado com essa busca!"})
+            return
         } 
         const productDelete = await prisma.product.delete({
             where: {uuid},

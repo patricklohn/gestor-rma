@@ -7,6 +7,7 @@ async function createPerson(req: Request, res: Response){
     try { 
           if (!name) {
             res.status(400).json({ message: "O campo NOME é obrigatório!" });
+            return
           }
 
         const person = await prisma.person.create({
@@ -50,6 +51,7 @@ async function getAllPerson(req: Request, res: Response){
         const personAll = await prisma.person.findMany()
         if(!personAll){
             res.status(404).json({message: "Nenhuma pessoa encontrada!"})
+            return
         }
         res.json(personAll)
     } catch (error) {

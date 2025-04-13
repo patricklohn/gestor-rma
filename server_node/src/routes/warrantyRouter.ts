@@ -1,6 +1,6 @@
 import Router from "express";
 import warrantyControllers from "../controllers/warrantyControllers"
-import authenticateToken from "../helpers/autenticacao";
+import authenticateToken from "../middlewares/autenticacao";
 
 
 const warrantyRouter = Router();

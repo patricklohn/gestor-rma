@@ -10,9 +10,11 @@ async function createWarranty(req: Request, res: Response){
 
         if (!description) {
             res.status(400).json({message: "O campo DESCRIÇÃO é obrigatório!"});
+            return
         }
         if(!defect){
             res.status(400).json({message: "O campo DEFITO é obrigatório!"})
+            return
         }
 
         const warrantyCreate = await prisma.warranty.create({
@@ -70,6 +72,7 @@ async function getAllWarranty(req: Request, res: Response){
         const warrantyAll = await prisma.warranty.findMany()
         if(!warrantyAll){
             res.status(404).json({message: "Nenhuma garantia encontrada!"})
+            return
         }
         res.json(warrantyAll)
     } catch (error) {
@@ -86,6 +89,7 @@ async function getAllWarrantyById(req: Request, res: Response){
         })
         if(!warrantyUuid){
             res.status(404).json({message: "Nenhuma garantia encontrada!"})
+            return
         }
         res.json(warrantyUuid)
     } catch (error) {
@@ -102,9 +106,11 @@ async function updateWanrranty(req: Request, res: Response){
 
         if (!description) {
             res.status(400).json({message: "O campo DESCRIÇÃO é obrigatório!"});
+            return
         }
         if(!defect){
             res.status(400).json({message: "O campo DEFITO é obrigatório!"})
+            return
         }
 
         const warrantyUpdate = await prisma.warranty.update({

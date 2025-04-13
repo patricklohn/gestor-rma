@@ -4,7 +4,7 @@ import productRouter from './productRouter';
 import warrantyRouter from './warrantyRouter';
 import userRouter from './userRouter';
 import loginRoute from './authLoginUserRouter';
-import authenticateToken from '../helpers/autenticacao';
+import authenticateToken from '../middlewares/autenticacao';
 
 const routes = Router();
 routes.use("/person", authenticateToken, personRouter);
