@@ -23,7 +23,7 @@ async function createUser(req: Request,res: Response){
         }
 
         const emailServer = await prisma.user.findMany({where:{email}})
-        if(emailServer){
+        if(emailServer.length > 0){
             res.status(400).json({message: "Email já esta em uso em outro usuario."})
             return
         }
