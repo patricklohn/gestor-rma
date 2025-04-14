@@ -17,6 +17,8 @@ async function createWarranty(req: Request, res: Response){
             return
         }
 
+        const fileArq = req.file || null;
+
         const warrantyCreate = await prisma.warranty.create({
             data:{
                 description,
@@ -25,7 +27,7 @@ async function createWarranty(req: Request, res: Response){
                 data_end,
                 data_buy,
                 invoice,
-                invoice_arq,
+                invoice_arq: fileArq?.filename,
                 status,
                 defect, 
                 notes,
@@ -103,7 +105,7 @@ async function updateWanrranty(req: Request, res: Response){
         const uuid: string = req.params.uuid;
         const {description, serial_number, data_start, data_end, data_buy, 
             product, supplier,client, invoice, invoice_arq, status, defect,notes, order_service} = req.body;
-
+        
         if (!description) {
             res.status(400).json({message: "O campo DESCRIÇÃO é obrigatório!"});
             return
@@ -112,6 +114,8 @@ async function updateWanrranty(req: Request, res: Response){
             res.status(400).json({message: "O campo DEFITO é obrigatório!"})
             return
         }
+
+        const fileArq = req.file || null;
 
         const warrantyUpdate = await prisma.warranty.update({
             where: {uuid},
@@ -122,7 +126,7 @@ async function updateWanrranty(req: Request, res: Response){
                 data_end,
                 data_buy,
                 invoice,
-                invoice_arq,
+                invoice_arq: fileArq?.filename,
                 status,
                 defect, 
                 notes,
