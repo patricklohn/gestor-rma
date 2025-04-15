@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(morgan('dev'));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('combined', { stream: accessLogStream }));
+app.use("/uploads", express.static(path.join(process.cwd(), "src/public/uploads")));
 
 //Rotas
 app.use("/", routes);
