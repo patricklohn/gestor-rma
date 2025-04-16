@@ -14,7 +14,7 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) =>{
     }
     jwt.verify(token, process.env.SECRET as string, (error) => {
         if (error) {
-          res.status(403).json({ message: "Faleid to authenticate Token" });
+          res.status(403).json({ message: "Error authenticate Token" });
           return
         }
         next();
