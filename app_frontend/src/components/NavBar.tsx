@@ -11,13 +11,13 @@ const NavBar = () => {
         </div> */}
         <ul>
           <li>
-            <a href="#">
+            <a href="/">
               <span className={classes.navbar_iconLi}><LiaHouseDamageSolid /></span>
               <span className={classes.navbar_txtLi}>Home</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/pessoas">
               <span className={classes.navbar_iconLi}><LiaUser /></span>
               <span className={classes.navbar_txtLi}>Pessoas</span>
             </a>
