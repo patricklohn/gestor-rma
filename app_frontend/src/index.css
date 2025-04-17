@@ -2,6 +2,8 @@
     /*Cores Darck Default*/
     --primary-color: #212121;
     --secondary-color: #f3f3f3;
+    --back-primay: #01040b;
+    --back-secondary: #3B82F6;
 }   
 
 *{
@@ -9,7 +11,10 @@
     color: var(--secondary-color);
     margin: 0;
     box-sizing: border-box;
-    background-color: var(--primary-color);
     font-family: "Poppins", sans-serif, Helvetica;
+}
+
+body{
+    background-color: var(--primary-color);
 }
 

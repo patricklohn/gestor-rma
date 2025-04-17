@@ -1,3 +1,59 @@
-.menuLateral{
-    width: 10px;
+.navbar{
+    height: 100vh;
 }
+
+.navbar_menuLateral{
+    width: 78px;
+    height: 100%;
+    background-color: var(--back-primay);
+    padding: 40px 0 40px 1%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.navbar_menuLateral:hover{
+    width: 300px;
+}
+
+.navbar_menuExpandir{
+    width: 100%;
+    padding-left: 10px;
+    color: #fff;
+}
+
+.navbar_menuExpandir svg{
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.navbar_menuLateral ul{
+    height: 100%;
+    list-style: none;
+}
+
+.navbar_menuLateral ul li:hover{
+    background-color: var(--back-secondary);
+}
+
+.navbar_menuLateral ul li a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    padding: 20px 4%;
+    display: flex;
+    margin-bottom: 20px;
+    line-height: 35px;
+}
+
+.navbar_txtLi{
+    margin-left: 20px;
+} 
+
+.navbar_iconLi{
+    font-size: 30px;
+    margin-left: 8px;
+}
+
