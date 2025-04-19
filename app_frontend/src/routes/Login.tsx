@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import RmaApi from '../axios/config'
+import axios from 'axios';
 
 const Login = () => {
 
@@ -14,19 +15,26 @@ const Login = () => {
   const handleSubmit = async(e: React.FormEvent) =>{
     e.preventDefault();
     try {
-      const response = await RmaApi.post('/login/userLogin', {email, senha});
+      const response = await RmaApi.post('/login/userLogin', {email, password: senha});
+      if(response.status === 401){
+        toast.error(response.data.message)
+      }
       if(response.status === 200){
         const { token} = response.data;
         localStorage.setItem('token', token);
         toast.success("Login realizado com sucesso!")
         navigate("/")
       }
-      
-    } catch (error) {
-      console.log(error)
-      toast.error("Algum erro ocorreu ao tentar efetuar o Login!")
-    }
-  }
+    } catch(error: unknown){
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || 'Erro da API');
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Erro desconhecido');
+      }
+    };
+   }
 
   return (
     <div className={classes.login_container}>
