@@ -23,7 +23,7 @@ const Login = () => {
         const { token} = response.data;
         localStorage.setItem('token', token);
         toast.success("Login realizado com sucesso!")
-        navigate("/")
+        navigate("/home")
       }
     } catch(error: unknown){
       if (axios.isAxiosError(error)) {
