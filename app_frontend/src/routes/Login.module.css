@@ -1,0 +1,73 @@
+.login_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login_container img{
+    margin-top: 15rem;
+    width: 300px;
+    height: 350px;
+}
+
+.login_logo_container{
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--back-primay);
+}
+
+.login_form_container{
+    width: 400px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-color);
+}
+
+.login_form_container form{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.login_formInput_container{
+    display: flex;
+    flex-direction: column;
+    width: 250px;    
+}
+
+.login_formInput_container label{
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.login_formInput_container input{
+    border: none;
+    outline: none;
+    background-color: var(--secondary-color);
+    border-bottom: 1.2px solid var(--back-primay);
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.login_form_container input[type="submit"]{
+    background-color: var(--back-secondary);
+    opacity: 0.5;
+    cursor: pointer;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: 0.2s;
+}
+
+.login_container input[type="submit"]:hover{
+    opacity: 1;
+}
