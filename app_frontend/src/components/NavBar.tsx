@@ -43,7 +43,7 @@ const NavBar = () => {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/dados">
               <span className={classes.navbar_iconLi}><LiaUserCircle /></span>
               <span className={classes.navbar_txtLi}>Dados</span>
             </a>

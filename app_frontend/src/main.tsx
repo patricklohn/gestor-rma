@@ -11,7 +11,7 @@ import Home from './routes/Home.tsx'
 import ErrorPage from './routes/ErrorPage.tsx'
 import Login from './routes/Login.tsx'
 import Pessoas from './routes/Pessoas.tsx'
-
+import DadosToken from './routes/DadosToken.tsx'
 
 
 const router = createBrowserRouter([
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Login/>
+      },
+      {
+        path: "/dados",
+        element: <DadosToken/>
       },
       {
         element: <PrivateRoute/>,
