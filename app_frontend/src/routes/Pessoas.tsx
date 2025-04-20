@@ -4,11 +4,13 @@ import RmaApi from '../axios/config'
 import axios from 'axios'
 import classes from './Pessoas.module.css'
 import NavBar from '../components/NavBar'
+import FormPerson from '../components/FormPerson'
 
 const Pessoas = () => {
   const [pessoas, setPessoas] = useState([])
   const isFetching = useRef(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [createNew, setCreateNew] = useState(false);
 
   const loadPessoas = async () =>{
     if (isFetching.current) return;
@@ -50,6 +52,13 @@ const Pessoas = () => {
       <NavBar />
       <div className={classes.pessoas_container}>
         <h1>Pessoas</h1>
+        <div className={classes.pesssoas_create}>
+          <h2>Cadastrar Fornecedor ou Cliente.</h2>
+          <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
+          {createNew === false && <button onClick={() => setCreateNew(true)}>Cadastrar</button>}
+          {createNew && <FormPerson/>}
+          {createNew && <button onClick={() => setCreateNew(false)}>Cancelar</button>}
+        </div>
         <div className={classes.pessoas_retorno}>
           <h2>Dados de Fornecedores e Clientes</h2>
           {isFetching.current === true && <div id="loading-screen"><div className="loading-spinner"></div></div>}
