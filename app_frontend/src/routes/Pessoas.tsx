@@ -8,6 +8,7 @@ import NavBar from '../components/NavBar'
 const Pessoas = () => {
   const [pessoas, setPessoas] = useState([])
   const isFetching = useRef(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const loadPessoas = async () =>{
     if (isFetching.current) return;
@@ -39,6 +40,11 @@ const Pessoas = () => {
     loadPessoas();
   }, []);
 
+  const pessoasFiltradas = pessoas.filter((pessoa: any) =>
+    pessoa.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    pessoa.email.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <div className={classes.pessoas}>
       <NavBar />
@@ -47,8 +53,16 @@ const Pessoas = () => {
         <div className={classes.pessoas_retorno}>
           <h2>Dados de Fornecedores e Clientes</h2>
           {isFetching.current === true && <div id="loading-screen"><div className="loading-spinner"></div></div>}
-          {!pessoas.length && <p>Não a cadastrados</p>}
-          <table>
+          {!pessoasFiltradas.length && <p>Não a cadastrados</p>}
+          <div className={classes.pessoas_search}>
+            <input
+            type="text"
+            placeholder="Pesquisar por nome ou email"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}/>
+          </div>
+          {pessoasFiltradas.length > 0 && (
+            <table>
             <tr>
               <th>
                 Nome
@@ -69,7 +83,7 @@ const Pessoas = () => {
                 Ver mais
               </th>
             </tr>
-          {pessoas.map((pessoa: any)=>(
+          {pessoasFiltradas.map((pessoa: any)=>(
             <tr key={pessoa.uuid}>
               <td>{pessoa.name}</td>
               <td>{pessoa.client ? '✅' : '❌'}</td>
@@ -80,6 +94,7 @@ const Pessoas = () => {
             </tr>
           ))}
           </table>
+          )}
         </div>
       </div>
     </div>
