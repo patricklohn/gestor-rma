@@ -9,8 +9,10 @@ const DadosToken = () => {
       <NavBar />
       <div className={classes.DadosToken_container}>
         <h1>Dados Usuario</h1>
-        <span>Email: {user?.email || "Usuario não logado"}</span>
-        <span>Nome: {user?.name || "Usuario não logado"}</span>
+        <div>
+          <span>Email: {user?.email || "Usuario não logado"}</span>
+          <span>Nome: {user?.name || "Usuario não logado"}</span>
+        </div>
       </div>
     </div>
   )

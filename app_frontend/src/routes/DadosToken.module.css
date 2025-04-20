@@ -4,4 +4,17 @@
 
 .DadosToken_container{
     margin: 0 auto;
+    text-align: center;
+}
+
+.DadosToken_container div{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 100%;
+}
+
+.DadosToken_container span{
+    font-size: 1.2rem;
 }
