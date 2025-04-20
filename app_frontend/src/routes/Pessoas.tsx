@@ -1,13 +1,86 @@
+import { useState, useEffect, useRef} from 'react'
+import { toast } from 'react-toastify'
+import RmaApi from '../axios/config'
+import axios from 'axios'
 import classes from './Pessoas.module.css'
-
 import NavBar from '../components/NavBar'
 
 const Pessoas = () => {
+  const [pessoas, setPessoas] = useState([])
+  const isFetching = useRef(false);
+
+  const loadPessoas = async () =>{
+    if (isFetching.current) return;
+    isFetching.current = true;
+
+    try {
+      const res = await RmaApi.get('/person/getAll');
+      if(!res.data){
+        toast.error('Nenhum dado encontrado!')
+      }
+      setPessoas(res.data);
+      isFetching.current = false;
+    } catch(error: unknown){
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || 'Erro da API');
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Erro desconhecido');
+      }
+      setTimeout(() => {
+        isFetching.current = false;
+        loadPessoas();
+      }, 15000);
+    };
+  }
+
+  useEffect(()=>{
+    loadPessoas();
+  }, []);
+
   return (
     <div className={classes.pessoas}>
       <NavBar />
       <div className={classes.pessoas_container}>
         <h1>Pessoas</h1>
+        <div className={classes.pessoas_retorno}>
+          <h2>Dados de Fornecedores e Clientes</h2>
+          {isFetching.current === true && <div id="loading-screen"><div className="loading-spinner"></div></div>}
+          {!pessoas.length && <p>Não a cadastrados</p>}
+          <table>
+            <tr>
+              <th>
+                Nome
+              </th>
+              <th>
+                Cliente
+              </th>
+              <th>
+                Fornecedor
+              </th>
+              <th>
+                Email
+              </th>
+              <th>
+                Editar
+              </th>
+              <th>
+                Ver mais
+              </th>
+            </tr>
+          {pessoas.map((pessoa: any)=>(
+            <tr key={pessoa.uuid}>
+              <td>{pessoa.name}</td>
+              <td>{pessoa.client ? '✅' : '❌'}</td>
+              <td>{pessoa.supplier ? '✅' : '❌'}</td>
+              <td>{pessoa.email}</td>
+              <td>Editar</td>
+              <td>Ver mais</td>
+            </tr>
+          ))}
+          </table>
+        </div>
       </div>
     </div>
   )
