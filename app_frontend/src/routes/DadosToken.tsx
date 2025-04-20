@@ -11,6 +11,7 @@ const DadosToken = () => {
         <h1>Dados Usuario</h1>
         <div>
           <span>Email: {user?.email || "Usuario não logado"}</span>
+          <span>Permissão: {user?.role || "Usuario não logado"}</span>
           <span>Nome: {user?.name || "Usuario não logado"}</span>
         </div>
       </div>
