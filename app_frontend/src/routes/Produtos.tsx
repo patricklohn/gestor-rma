@@ -1,29 +1,30 @@
+import classes from './Produtos.module.css'
 import { useState, useEffect, useRef} from 'react'
 import { toast } from 'react-toastify'
 import RmaApi from '../axios/config'
 import axios from 'axios'
-import classes from './Pessoas.module.css'
 import NavBar from '../components/NavBar'
-import FormCreatePerson from '../components/FormCreatePerson'
+import FormCreateProduto from '../components/FormCreateProduto'
 import { FaUserPlus } from "react-icons/fa";
 
-const Pessoas = () => {
-  const [pessoas, setPessoas] = useState([])
+const Produtos = () => {
+
+  const [produtos, setProdutos] = useState([])
   const isFetching = useRef(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [createNew, setCreateNew] = useState(false);
-  const [pessoaToEdit, setPessoaToEdit] = useState<any | null>(null);
+  const [productToEdit, setProdutoToEdit] = useState<any | null>(null);
 
-  const loadPessoas = async () =>{
+  const loadProdutos = async () =>{
     if (isFetching.current) return;
     isFetching.current = true;
 
     try {
-      const res = await RmaApi.get('/person/getAll');
+      const res = await RmaApi.get('/product/getAll');
       if(!res.data){
         toast.error('Nenhum dado encontrado!')
       }
-      setPessoas(res.data);
+      setProdutos(res.data);
       isFetching.current = false;
     } catch(error: unknown){
       if (axios.isAxiosError(error)) {
@@ -35,70 +36,64 @@ const Pessoas = () => {
       }
       setTimeout(() => {
         isFetching.current = false;
-        loadPessoas();
+        loadProdutos();
       }, 15000);
     };
   }
 
   useEffect(()=>{
-    loadPessoas();
+    loadProdutos();
   }, []);
 
-  const pessoasFiltradas = pessoas.filter((pessoa: any) =>
-    pessoa.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pessoa.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const produtosFiltradas = produtos.filter((produto: any) =>
+    produto.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    produto.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
-    <div className={classes.pessoas}>
+    <div className={classes.produtos}>
       <NavBar />
-      <div className={classes.pessoas_container}>
-        <h1>Pessoas</h1>
+      <div className={classes.produtos_container}>
+        <h1>rodutos</h1>
         <div className={classes.pesssoas_create}>
           <h2>Cadastrar Fornecedor ou Cliente.</h2>
           <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
-          <button className={classes.pesssoas_create_button} onClick={() => setCreateNew(true)}>
+          <button className={classes.produto_create_button} onClick={() => setCreateNew(true)}>
           <FaUserPlus /> Cadastrar
           </button>
           {createNew && (
           <>
-          <FormCreatePerson
-            personToEdit={pessoaToEdit}
+          <FormCreateProduto
+            productToEdit={productToEdit}
             onSuccess={() => {
             setCreateNew(false);
-            setPessoaToEdit(null);
-            loadPessoas(); // atualiza a lista após criação
+            setProdutoToEdit(null);
+            loadProdutos(); // atualiza a lista após criação
           }}
           />
           <div id="overlay"></div>
           </>
           )}
         </div>
-        <div className={classes.pessoas_retorno}>
+        <div className={classes.produtos_retorno}>
           <h2>Dados de Fornecedores e Clientes</h2>
           {isFetching.current === true && <div id="loading-screen"><div className="loading-spinner"></div></div>}
-          {!pessoasFiltradas.length && <p>Não a cadastrados</p>}
-          <div className={classes.pessoas_search}>
+          {!produtosFiltradas.length && <p>Não a cadastrados</p>}
+          <div className={classes.produtos_search}>
             <input
             type="text"
             placeholder="Pesquisar por nome ou email"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}/>
           </div>
-          {pessoasFiltradas.length > 0 && (
+          {produtosFiltradas.length > 0 && (
             <table>
             <tr>
               <th>
-                Nome
+                Descrição
               </th>
               <th>
-                Cliente
-              </th>
-              <th>
-                Fornecedor
-              </th>
-              <th>
-                Email
+                Observação
               </th>
               <th>
                 Editar
@@ -107,18 +102,16 @@ const Pessoas = () => {
                 Ver mais
               </th> */}
             </tr>
-          {pessoasFiltradas.map((pessoa: any)=>(
-            <tr key={pessoa.uuid} onDoubleClick={
+          {produtosFiltradas.map((produto: any)=>(
+            <tr key={produto.uuid} onDoubleClick={
               () =>{
-              setPessoaToEdit(pessoa);
+              setProdutoToEdit(produto);
               setCreateNew(true);
               }}>
-              <td>{pessoa.name}</td>
-              <td>{pessoa.client ? '✅' : '❌'}</td>
-              <td>{pessoa.supplier ? '✅' : '❌'}</td>
-              <td>{pessoa.email}</td>
+              <td>{produto.description}</td>
+              <td>{produto.observation}</td>
               <td style={{cursor: `pointer`}}><a onClick={() =>{
-                setPessoaToEdit(pessoa);
+                setProdutoToEdit(produto);
                 setCreateNew(true);
                 }}>Editar ✏️</a></td>
               {/* <td>Ver mais</td> */}
@@ -132,4 +125,4 @@ const Pessoas = () => {
   )
 }
 
-export default Pessoas
+export default Produtos

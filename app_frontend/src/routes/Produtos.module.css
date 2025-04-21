@@ -1,0 +1,64 @@
+.produtos{
+    display: flex;
+    text-align: center;
+}
+
+.produtos_container{
+    margin: 0 auto;
+}
+
+.pesssoas_create{
+    padding-top: 6rem;
+}
+
+.produto_create_button{
+    background-color: var(--back-secondary) !important;
+    margin-top: 2rem;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: .5s;
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.produto_create_button:hover{
+    opacity: 1;
+}
+
+.produtos_retorno h2{
+    margin-top: 6rem;
+    text-align: center;
+}
+
+.produtos_search{
+    width: 350px;
+    margin: 0 auto;
+}
+
+.produtos_container input{
+    border: none;
+    outline: none;
+    text-align: center;
+    width: 100%;
+    margin:2rem 0;
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--back-secondary);
+}
+
+.produtos_retorno table{
+    width: 1000px;
+    border: 1px solid var(--back-secondary);
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.produtos_retorno table td,
+.produtos_retorno table th{
+    text-align: center;
+    border: 1px solid var(--back-secondary);
+    padding: 0.5rem;
+}
