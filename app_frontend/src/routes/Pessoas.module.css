@@ -7,8 +7,28 @@
     margin: 0 auto;
 }
 
+.pesssoas_create{
+    padding-top: 6rem;
+}
+
+.pesssoas_create_button{
+    background-color: var(--back-secondary) !important;
+    margin-top: 2rem;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: .5s;
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.pesssoas_create_button:hover{
+    opacity: 1;
+}
+
 .pessoas_retorno h2{
-    margin-top: 10rem;
+    margin-top: 6rem;
     text-align: center;
 }
 

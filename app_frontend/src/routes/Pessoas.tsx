@@ -4,7 +4,9 @@ import RmaApi from '../axios/config'
 import axios from 'axios'
 import classes from './Pessoas.module.css'
 import NavBar from '../components/NavBar'
-import FormPerson from '../components/FormPerson'
+import FormCreatePerson from '../components/FormCreatePerson'
+import { FaRegTimesCircle } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 
 const Pessoas = () => {
   const [pessoas, setPessoas] = useState([])
@@ -55,9 +57,24 @@ const Pessoas = () => {
         <div className={classes.pesssoas_create}>
           <h2>Cadastrar Fornecedor ou Cliente.</h2>
           <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
-          {createNew === false && <button onClick={() => setCreateNew(true)}>Cadastrar</button>}
-          {createNew && <FormPerson/>}
-          {createNew && <button onClick={() => setCreateNew(false)}>Cancelar</button>}
+          {!createNew && (
+          <button className={classes.pesssoas_create_button} onClick={() => setCreateNew(true)}>
+          <FaUserPlus /> Cadastrar
+          </button>
+          )}
+          {createNew && (
+          <>
+          <FormCreatePerson
+            onSuccess={() => {
+            setCreateNew(false);
+            loadPessoas(); // atualiza a lista após criação
+          }}
+          />
+          <button onClick={() => setCreateNew(false)}>
+          <FaRegTimesCircle /> Cancelar
+          </button>
+          </>
+          )}
         </div>
         <div className={classes.pessoas_retorno}>
           <h2>Dados de Fornecedores e Clientes</h2>
