@@ -12,6 +12,7 @@ import Home from './routes/Home.tsx'
 import ErrorPage from './routes/ErrorPage.tsx'
 import Login from './routes/Login.tsx'
 import Pessoas from './routes/Pessoas.tsx'
+import Produtos from './routes/Produtos.tsx'
 import DadosToken from './routes/DadosToken.tsx'
 
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
           {
             path: "/pessoas",
             element: <Pessoas/>
+          },
+          {
+            path: "/produtos",
+            element: <Produtos/>
           },
         ]
       }

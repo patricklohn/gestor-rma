@@ -62,12 +62,12 @@ const FormCreateProduto = ({productToEdit, onSuccess }: Props) => {
     }
 
   return (
-    <div className={classes.formPerson_container}>
+    <div className={classes.formProduct_container}>
         <button onClick={() => onSuccess?.()}>
         <FaRegTimesCircle/>
         </button>
         <h1>Prencha as informações:</h1>
-        <div className={classes.formPerson_form}>
+        <div className={classes.formProduct_form}>
           <form onSubmit={createProduct}>
             <label>
               <span>Descrição</span>

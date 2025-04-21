@@ -31,7 +31,7 @@ const NavBar = () => {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/produtos">
               <span className={classes.navbar_iconLi}><LiaBoxSolid /></span>
               <span className={classes.navbar_txtLi}>Produtos</span>
             </a>

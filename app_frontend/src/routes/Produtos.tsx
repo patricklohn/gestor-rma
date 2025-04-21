@@ -5,7 +5,7 @@ import RmaApi from '../axios/config'
 import axios from 'axios'
 import NavBar from '../components/NavBar'
 import FormCreateProduto from '../components/FormCreateProduto'
-import { FaUserPlus } from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
 
 const Produtos = () => {
 
@@ -46,8 +46,8 @@ const Produtos = () => {
   }, []);
 
   const produtosFiltradas = produtos.filter((produto: any) =>
-    produto.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    produto.email.toLowerCase().includes(searchTerm.toLowerCase())
+    produto.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    produto.observation.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
@@ -59,7 +59,7 @@ const Produtos = () => {
           <h2>Cadastrar Fornecedor ou Cliente.</h2>
           <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
           <button className={classes.produto_create_button} onClick={() => setCreateNew(true)}>
-          <FaUserPlus /> Cadastrar
+          <IoIosAddCircle /> Cadastrar
           </button>
           {createNew && (
           <>
