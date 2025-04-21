@@ -12,6 +12,7 @@ const Pessoas = () => {
   const isFetching = useRef(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [createNew, setCreateNew] = useState(false);
+  const [pessoaToEdit, setPessoaToEdit] = useState<any | null>(null);
 
   const loadPessoas = async () =>{
     if (isFetching.current) return;
@@ -62,8 +63,10 @@ const Pessoas = () => {
           {createNew && (
           <>
           <FormCreatePerson
+            personToEdit={pessoaToEdit}
             onSuccess={() => {
             setCreateNew(false);
+            setPessoaToEdit(null);
             loadPessoas(); // atualiza a lista após criação
           }}
           />
@@ -110,7 +113,10 @@ const Pessoas = () => {
               <td>{pessoa.client ? '✅' : '❌'}</td>
               <td>{pessoa.supplier ? '✅' : '❌'}</td>
               <td>{pessoa.email}</td>
-              <td>Editar</td>
+              <td><a onClick={() =>{
+                setPessoaToEdit(pessoa);
+                setCreateNew(true);
+                }}>Editar ✏️</a></td>
               {/* <td>Ver mais</td> */}
             </tr>
           ))}

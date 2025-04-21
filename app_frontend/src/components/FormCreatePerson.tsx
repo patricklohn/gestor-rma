@@ -7,13 +7,22 @@ import classes from "./FormCreatePerson.module.css"
 
 interface Props {
   onSuccess?: () => void;
+  personToEdit?:{
+    uuid: string;
+    name: string;
+    email: string;
+    client: boolean;
+    supplier: boolean;
+  }
 }
 
-const FormCreatePerson = ({ onSuccess }: Props) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [isCliente, setIsCliente] = useState(false);
-  const [isSupplier, setIsSupplier] = useState(false);
+const FormCreatePerson = ({personToEdit, onSuccess }: Props) => {
+  const [name, setName] = useState(personToEdit?.name || '');
+  const [email, setEmail] = useState(personToEdit?.email || '');
+  const [isCliente, setIsCliente] = useState(personToEdit?.client || false);
+  const [isSupplier, setIsSupplier] = useState(personToEdit?.supplier || false);
+
+  const isEditing = !!personToEdit;
 
   const resetForm = () => {
     setName('');
@@ -33,11 +42,20 @@ const FormCreatePerson = ({ onSuccess }: Props) => {
         supplier: isSupplier
       }
 
-      const res = await RmaApi.post('/person/create', person);
-      if(res.status === 201){
+      if(isEditing){
+        const res = await RmaApi.put(`/person/update/${personToEdit.uuid}`, person);
+        if(res.status === 200){
         resetForm();
         toast.success(res.data.message)
         onSuccess?.();
+      }
+      }else{
+        const res = await RmaApi.post('/person/create', person);
+        if(res.status === 201){
+        resetForm();
+        toast.success(res.data.message)
+        onSuccess?.();
+      }
       }
       
     } catch (error: unknown) {
@@ -80,7 +98,7 @@ const FormCreatePerson = ({ onSuccess }: Props) => {
                 <input type="checkbox" checked={isSupplier} onChange={(e) => setIsSupplier(e.target.checked)}/>
               </label>
             </div>
-            <input type="submit" value="Enviar"/>
+            {isEditing ? (<input type="submit" value="Editar"/>) : (<input type="submit" value="Cadastrar"/>) }
           </form>
         </div>
     </div>
