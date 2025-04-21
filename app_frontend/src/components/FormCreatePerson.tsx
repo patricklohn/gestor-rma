@@ -1,8 +1,9 @@
 import axios from "axios"
 import RmaApi from "../axios/config"
 import {useState} from "react"
-import classes from "./FormCreatePerson.module.css"
 import { toast } from "react-toastify"
+import { FaRegTimesCircle } from "react-icons/fa"
+import classes from "./FormCreatePerson.module.css"
 
 interface Props {
   onSuccess?: () => void;
@@ -28,8 +29,8 @@ const FormCreatePerson = ({ onSuccess }: Props) => {
       const person = {
         name: name,
         email: email,
-        isClient: isCliente,
-        isSupplier: isSupplier
+        client: isCliente,
+        supplier: isSupplier
       }
 
       const res = await RmaApi.post('/person/create', person);
@@ -54,16 +55,19 @@ const FormCreatePerson = ({ onSuccess }: Props) => {
 
 
   return (
-    <div>
-        <h1>Prencha as informações a baixo</h1>
-        <div className={classes.formPerson_container}>
+    <div className={classes.formPerson_container}>
+        <button onClick={() => onSuccess?.()}>
+        <FaRegTimesCircle/>
+        </button>
+        <h1>Prencha as informações:</h1>
+        <div className={classes.formPerson_form}>
           <form onSubmit={createPerson}>
             <label>
               <span>Nome:</span>
               <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
             </label>
             <label>
-              <span>Email</span>
+              <span>Email:</span>
               <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
             </label>
             <div>

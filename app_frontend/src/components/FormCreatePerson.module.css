@@ -1,0 +1,75 @@
+.formPerson_container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 100%;
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.formPerson_container button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    margin-bottom: 5rem;
+}
+
+.formPerson_container button svg{
+    fill: var(--primary-color);
+}
+
+.formPerson_container h1{
+    color: var(--primary-color);
+    margin-bottom: 10rem;
+}
+
+.formPerson_form form label span,
+.formPerson_form form label input,
+.formPerson_form form input[type = "submit"]{
+    color: var(--primary-color);
+}
+
+.formPerson_form form label{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-direction: row;
+}
+
+.formPerson_container form div{
+    display: flex;
+    justify-content: space-around;
+}
+
+.formPerson_form form label input[type = "checkbox"]{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.formPerson_form form input{
+    background-color: transparent;
+}
+
+.formPerson_form form input[type = "submit"]{
+    color: var(--primary-color);
+    background-color: var(--back-secondary);
+    width: 50%;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--back-primay);
+}
+
+
+
+
+
+

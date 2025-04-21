@@ -5,7 +5,6 @@ import axios from 'axios'
 import classes from './Pessoas.module.css'
 import NavBar from '../components/NavBar'
 import FormCreatePerson from '../components/FormCreatePerson'
-import { FaRegTimesCircle } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
 
 const Pessoas = () => {
@@ -57,11 +56,9 @@ const Pessoas = () => {
         <div className={classes.pesssoas_create}>
           <h2>Cadastrar Fornecedor ou Cliente.</h2>
           <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
-          {!createNew && (
           <button className={classes.pesssoas_create_button} onClick={() => setCreateNew(true)}>
           <FaUserPlus /> Cadastrar
           </button>
-          )}
           {createNew && (
           <>
           <FormCreatePerson
@@ -70,9 +67,7 @@ const Pessoas = () => {
             loadPessoas(); // atualiza a lista após criação
           }}
           />
-          <button onClick={() => setCreateNew(false)}>
-          <FaRegTimesCircle /> Cancelar
-          </button>
+          <div id="overlay"></div>
           </>
           )}
         </div>
@@ -105,9 +100,9 @@ const Pessoas = () => {
               <th>
                 Editar
               </th>
-              <th>
+              {/* <th>
                 Ver mais
-              </th>
+              </th> */}
             </tr>
           {pessoasFiltradas.map((pessoa: any)=>(
             <tr key={pessoa.uuid}>
@@ -116,7 +111,7 @@ const Pessoas = () => {
               <td>{pessoa.supplier ? '✅' : '❌'}</td>
               <td>{pessoa.email}</td>
               <td>Editar</td>
-              <td>Ver mais</td>
+              {/* <td>Ver mais</td> */}
             </tr>
           ))}
           </table>
