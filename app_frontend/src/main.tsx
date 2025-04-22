@@ -13,6 +13,7 @@ import ErrorPage from './routes/ErrorPage.tsx'
 import Login from './routes/Login.tsx'
 import Pessoas from './routes/Pessoas.tsx'
 import Produtos from './routes/Produtos.tsx'
+import Rma from './routes/Rma.tsx'
 import DadosToken from './routes/DadosToken.tsx'
 
 
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
           {
             path: "/produtos",
             element: <Produtos/>
+          },
+          {
+            path: "/Rma",
+            element: <Rma/>
           },
         ]
       }
