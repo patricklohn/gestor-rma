@@ -54,7 +54,7 @@ const Produtos = () => {
     <div className={classes.produtos}>
       <NavBar />
       <div className={classes.produtos_container}>
-        <h1>rodutos</h1>
+        <h1>Produtos</h1>
         <div className={classes.pesssoas_create}>
           <h2>Cadastrar Fornecedor ou Cliente.</h2>
           <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
