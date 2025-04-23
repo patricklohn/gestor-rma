@@ -8,7 +8,7 @@
 }
 
 .pesssoas_create{
-    padding-top: 6rem;
+    padding-top: 4rem;
 }
 
 .produto_create_button{
@@ -28,7 +28,7 @@
 }
 
 .produtos_retorno h2{
-    margin-top: 6rem;
+    margin-top: 4rem;
     text-align: center;
 }
 
@@ -54,6 +54,7 @@
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
+    margin-bottom: 5rem;
 }
 
 .produtos_retorno table td,
