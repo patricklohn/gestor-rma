@@ -1,0 +1,8 @@
+.rma{
+    display: flex;
+    text-align: center;
+}
+
+.rma_container{
+    margin: 0 auto;
+}
