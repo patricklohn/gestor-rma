@@ -60,17 +60,19 @@ model Warranty {
   uuid          String @id @default(uuid())
   description   String
   serial_number String?
+  change_sn     String?
   data_start    DateTime?
   data_buy      DateTime?
   data_end      DateTime?
   productId     String?
   product       Product? @relation(fields: [productId], references: [uuid])
   supplierId    String?
-  supplier      Person?   @relation("SupplierWarranty", fields: [supplierId], references: [uuid])
+  supplier      Person?  @relation("SupplierWarranty", fields: [supplierId], references: [uuid])
   clientId      String?
-  client        Person?   @relation("ClientWarranty", fields: [clientId], references: [uuid])        
+  client        Person?  @relation("ClientWarranty", fields: [clientId], references: [uuid])        
   invoice       String?
   invoice_arq   String?
+  client_prod   Boolean? @default(false)
   status        String
   defect        String
   notes         String?
