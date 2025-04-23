@@ -18,6 +18,24 @@ body{
     background-color: var(--primary-color);
 }
 
+/*Scroll Bar*/
+
+::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+}
+
+::-webkit-scrollbar {
+    background-color: var(--secondary-color);
+    width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--back-secondary);
+    border-radius: 15px;
+}
+
+/*Ocultar tela*/
+
 #overlay {
     display: block; /* Inicialmente escondido */
     position: fixed; /* Cobrir toda a viewport */
