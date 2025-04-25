@@ -1,0 +1,10 @@
+{
+    "name": "gestor-rma",
+    "version": "1.0.0",
+    "scripts": {
+    "start:all": "concurrently \"npm start --prefix server_node\" \"npm run dev --prefix app_frontend\""
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.2"
+    }
+}
