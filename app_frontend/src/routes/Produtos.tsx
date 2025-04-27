@@ -56,8 +56,8 @@ const Produtos = () => {
       <div className={classes.produtos_container}>
         <h1>Produtos</h1>
         <div className={classes.pesssoas_create}>
-          <h2>Cadastrar Fornecedor ou Cliente.</h2>
-          <p>Para cadastrar um novo fornecedor ou cliente, clique no botão abaixo.</p>
+          <h2>Cadastrar Produtos.</h2>
+          <p>Para cadastrar um novo produto, clique no botão abaixo.</p>
           <button className={classes.produto_create_button} onClick={() => setCreateNew(true)}>
           <IoIosAddCircle /> Cadastrar
           </button>
@@ -76,7 +76,7 @@ const Produtos = () => {
           )}
         </div>
         <div className={classes.produtos_retorno}>
-          <h2>Dados de Fornecedores e Clientes</h2>
+          <h2>Dados dos produtos</h2>
           {isFetching.current === true && <div id="loading-screen"><div className="loading-spinner"></div></div>}
           {!produtosFiltradas.length && <p>Não a cadastrados</p>}
           <div className={classes.produtos_search}>
