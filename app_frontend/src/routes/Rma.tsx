@@ -1,4 +1,3 @@
-import React from 'react'
 import classes from './Rma.module.css'
 import NavBar from '../components/NavBar'
 import {useNavigate} from "react-router-dom"
@@ -14,9 +13,13 @@ const Rma = () => {
         <div className={classes.rma_create}>
           <h2>Criação de RMA</h2>
           <p>Para criar um novo RMA, clique no botão abaixo.</p>
-          <button onClick={() => navigate('rma/create')} className='rma_btn_create'>
+          <button onClick={() => navigate('rma/create')} className={classes.rma_btn_create}>
             Criar Rma
           </button>
+        </div>
+        <div className={classes.rma_list}>
+          <h2>Lista Rma</h2>
+
         </div>
       </div>
     </div>

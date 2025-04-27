@@ -6,3 +6,28 @@
 .rma_container{
     margin: 0 auto;
 }
+
+.rma_create{
+    padding-top: 4rem;
+}
+
+.rma_btn_create{
+    background-color: var(--back-secondary) !important;
+    margin-top: 2rem;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: .5s;
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.rma_btn_create:hover{
+    opacity: 1;
+}
+
+.rma_list{
+    margin-top: 4rem;
+}
+
