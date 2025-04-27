@@ -1,9 +1,15 @@
 import classes from './Rma.module.css'
 import NavBar from '../components/NavBar'
 import {useNavigate} from "react-router-dom"
+import { useState, useEffect} from 'react'
+import { toast } from 'react-toastify'
+import RmaApi from '../axios/config'
+import axios from 'axios'
 
 const Rma = () => {
   const navigate = useNavigate();
+  const [rmaData, setRamaData] = useState([])
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className={classes.rma}>
