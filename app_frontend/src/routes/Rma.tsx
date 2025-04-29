@@ -11,6 +11,12 @@ interface Produto {
   description: string;
   // adicione outros campos se precisar
 }
+interface Person {
+  uuid: string;
+  name: string;
+  // adicione outros campos se precisar
+}
+
 
 const Rma = () => {
   const navigate = useNavigate();
@@ -18,6 +24,7 @@ const Rma = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const isFetching = useRef(false);
   const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [person, setPerson] = useState<Person[]>([]);
   
   const loadRma = async () =>{
     if (isFetching.current) return;
@@ -63,6 +70,25 @@ const Rma = () => {
     };
   }
 
+  const loadPessoas = async () =>{
+
+    try {
+      const res = await RmaApi.get('person/getAll');
+      if(!res.data){
+        toast.error('Nenhum dado encontrado!')
+      }
+      setPerson(res.data);
+    } catch(error: unknown){
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || 'Erro da API');
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Erro desconhecido');
+      }
+  }
+  }
+
   const formatarData = (data: string) =>{
     const dataFormatada = 
       new Date(data).toLocaleString('pt-BR', {
@@ -70,8 +96,8 @@ const Rma = () => {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      // hour: '2-digit',
+      // minute: '2-digit',
     });
     return dataFormatada 
   }
@@ -79,6 +105,7 @@ const Rma = () => {
   useEffect(()=>{
     loadRma();
     loadProdutos();
+    loadPessoas();
   }, []);
 
   const filterRma = rmaData.filter((rma: any) =>
@@ -127,19 +154,19 @@ const Rma = () => {
               <th>Fornecedor</th>
               <th>Cliente</th>
               <th>Nota</th>
-              <th>Cliente</th>
               <th>Status</th>
               <th>Ordem de serviço</th>
             </tr>
             {filterRma.map((rma: any)=>(
               <tr key={rma.uuid}>
                 <td>{rma.description}</td>
-                <td>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto ão encontrado'}</td>
+                <td>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto não encontrado'}</td>
                 <td>{formatarData(rma.data_start)}</td>
-                <td>{rma.data_end}</td>
-                <td>{rma.client_prod}</td>
-                <td>{rma.supplier}</td>
-                <td>{rma.client}</td>
+                <td>{rma.data_end === null ? "Não definido" : formatarData(rma.data_start)}</td>
+                <td>{rma.client_prod === false ? "❌" : "✅"}</td>
+                <td>{person.find((p) => p.uuid === rma.supplierId)?.name || "Fornecedor não encotrado"}</td>
+                <td>{person.find((p) => p.uuid === rma.clientId)?.name || "Cliente não encotrado"}</td>
+                <td>{rma.invoice}</td>
                 <td>{rma.status}</td>
                 <td>{rma.order_service}</td>
               </tr>
