@@ -108,16 +108,24 @@ const Rma = () => {
     loadPessoas();
   }, []);
 
-  const filterRma = rmaData.filter((rma: any) =>
-    rma.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.serial_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.supplier.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.client.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.invoice.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rma.order_service.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filterRma = rmaData.filter((rma: any) => {
+    const search = searchTerm.toLowerCase();
+  
+    const fornecedor = person.find((p) => p.uuid === rma.supplierId)?.name?.toLowerCase() || '';
+    const cliente = person.find((p) => p.uuid === rma.clientId)?.name?.toLowerCase() || '';
+    const produto = produtos.find((p) => p.uuid === rma.productId)?.description?.toLowerCase() || '';
+  
+    return (
+      rma.description?.toLowerCase().includes(search) ||
+      rma.serial_number?.toLowerCase().includes(search) ||
+      fornecedor.includes(search) ||
+      cliente.includes(search) ||
+      produto.includes(search) ||
+      rma.invoice?.toLowerCase().includes(search) ||
+      rma.status?.toLowerCase().includes(search) ||
+      rma.order_service?.toLowerCase().includes(search)
+    );
+  });
 
   return (
     <div className={classes.rma}>
