@@ -72,6 +72,8 @@ model Warranty {
   client        Person?  @relation("ClientWarranty", fields: [clientId], references: [uuid])        
   invoice       String?
   invoice_arq   String?
+  change_inv    String?
+  chang_inv_arq String?
   client_prod   Boolean? @default(false)
   status        String
   defect        String
