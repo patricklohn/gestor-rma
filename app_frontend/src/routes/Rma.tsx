@@ -116,7 +116,6 @@ const Rma = () => {
     const produto = produtos.find((p) => p.uuid === rma.productId)?.description?.toLowerCase() || '';
   
     return (
-      rma.description?.toLowerCase().includes(search) ||
       rma.serial_number?.toLowerCase().includes(search) ||
       fornecedor.includes(search) ||
       cliente.includes(search) ||
@@ -143,7 +142,6 @@ const Rma = () => {
           <h2>Lista Rma</h2>
           {isFetching.current === true && <div id="loading-screen"><div className="loading-spinner"></div></div>}
           {!filterRma.length && <p>Não a cadastrados</p>}
-        </div>
         <div className={classes.produtos_search}>
             <input
             type="text"
@@ -154,7 +152,6 @@ const Rma = () => {
         {filterRma.length > 0 && (
           <table>
             <tr>
-              <th>Descrição</th>
               <th>Produto</th>
               <th>Data Inicio</th>
               <th>Data Finalização</th>
@@ -164,23 +161,25 @@ const Rma = () => {
               <th>Nota</th>
               <th>Status</th>
               <th>Ordem de serviço</th>
+              <th>Avançar</th>
             </tr>
             {filterRma.map((rma: any)=>(
               <tr key={rma.uuid}>
-                <td>{rma.description}</td>
-                <td>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto não encontrado'}</td>
-                <td>{formatarData(rma.data_start)}</td>
-                <td>{rma.data_end === null ? "Não definido" : formatarData(rma.data_start)}</td>
-                <td>{rma.client_prod === false ? "❌" : "✅"}</td>
-                <td>{person.find((p) => p.uuid === rma.supplierId)?.name || "Fornecedor não encotrado"}</td>
-                <td>{person.find((p) => p.uuid === rma.clientId)?.name || "Cliente não encotrado"}</td>
-                <td>{rma.invoice}</td>
-                <td>{rma.status}</td>
-                <td>{rma.order_service}</td>
+                <th>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto não encontrado'}</th>
+                <th>{formatarData(rma.data_start)}</th>
+                <th>{rma.data_end === null ? "Não definido" : formatarData(rma.data_start)}</th>
+                <th>{rma.client_prod === false ? "❌" : "✅"}</th>
+                <th>{person.find((p) => p.uuid === rma.supplierId)?.name || "Fornecedor não encotrado"}</th>
+                <th>{person.find((p) => p.uuid === rma.clientId)?.name || "Cliente não encotrado"}</th>
+                <th>{rma.invoice}</th>
+                <th>{rma.status}</th>
+                <th>{rma.order_service}</th>
+                <th>⏩</th>
               </tr>
             ))}
           </table>
         )}
+        </div>
       </div>
     </div>
   )

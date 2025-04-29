@@ -31,3 +31,39 @@
     margin-top: 4rem;
 }
 
+.rma_list h2{
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.produtos_search{
+    width: 350px;
+    margin: 0 auto;
+}
+
+.rma_list input{
+    border: none;
+    outline: none;
+    text-align: center;
+    width: 100%;
+    margin:2rem 0;
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--back-secondary);
+}
+
+.rma_list table{
+    width: 1350px;
+    border: 1px solid var(--back-secondary);
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    margin-bottom: 5rem;
+}
+
+.rma_listo table td,
+.rma_list table th{
+    text-align: center;
+    border: 1px solid var(--back-secondary);
+    padding: .5rem;
+}
