@@ -63,6 +63,19 @@ const Rma = () => {
     };
   }
 
+  const formatarData = (data: string) =>{
+    const dataFormatada = 
+      new Date(data).toLocaleString('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return dataFormatada 
+  }
+
   useEffect(()=>{
     loadRma();
     loadProdutos();
@@ -122,7 +135,7 @@ const Rma = () => {
               <tr key={rma.uuid}>
                 <td>{rma.description}</td>
                 <td>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto ão encontrado'}</td>
-                <td>{rma.data_start}</td>
+                <td>{formatarData(rma.data_start)}</td>
                 <td>{rma.data_end}</td>
                 <td>{rma.client_prod}</td>
                 <td>{rma.supplier}</td>
