@@ -51,6 +51,15 @@ const RmaCreate = () => {
       <NavBar/>
         <div className={classes.rmaCreate_container}>
             {uuid ? (<h1>Edição de RMA</h1>) : (<h1>Criação de RMA</h1>)}
+            <div className={classes.rmaCrate_form}>
+                <form onSubmit={(e) => {e.preventDefault(); console.log("teste") }}>
+                    <label>
+                        <span>Descrição</span>
+                        <input type="text" required value={rma?.description}/>
+                    </label>
+                    {uuid ? <input type="submit" value="Salvar"/> : <input type="submit" value="Criar" />}
+                </form>
+            </div>
         </div>
     </div>
   )
