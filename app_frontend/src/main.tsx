@@ -14,7 +14,9 @@ import Login from './routes/Login.tsx'
 import Pessoas from './routes/Pessoas.tsx'
 import Produtos from './routes/Produtos.tsx'
 import Rma from './routes/Rma.tsx'
+import RmaCreate from './routes/RmaCreate.tsx'
 import DadosToken from './routes/DadosToken.tsx'
+
 
 
 const router = createBrowserRouter([
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
           {
             path: "/rma",
             element: <Rma/>
+          },
+          {
+            path: "/rma/create",
+            element: <RmaCreate/>
+          },
+          {
+            path: "/rma/create/:uuid",
+            element: <RmaCreate/>
           },
         ]
       }

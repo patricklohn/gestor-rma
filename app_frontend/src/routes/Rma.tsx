@@ -134,7 +134,7 @@ const Rma = () => {
         <div className={classes.rma_create}>
           <h2>Criação de RMA</h2>
           <p>Para criar um novo RMA, clique no botão abaixo.</p>
-          <button onClick={() => navigate('#')} className={classes.rma_btn_create}>
+          <button onClick={() => navigate('/rma/create')} className={classes.rma_btn_create}>
             Criar Rma
           </button>
         </div>
@@ -164,7 +164,7 @@ const Rma = () => {
               <th>Avançar</th>
             </tr>
             {filterRma.map((rma: any)=>(
-              <tr key={rma.uuid}>
+              <tr key={rma.uuid} onDoubleClickCapture={() => navigate(`/rma/create/${rma.uuid}`)}>
                 <th>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto não encontrado'}</th>
                 <th>{formatarData(rma.data_start)}</th>
                 <th>{rma.data_end === null ? "Não definido" : formatarData(rma.data_start)}</th>
@@ -174,7 +174,7 @@ const Rma = () => {
                 <th>{rma.invoice}</th>
                 <th>{rma.status}</th>
                 <th>{rma.order_service}</th>
-                <th>⏩</th>
+                <th style={{cursor: "pointer"}} onClick={() => navigate(`/rma/create/${rma.uuid}`)}>⏩</th>
               </tr>
             ))}
           </table>
