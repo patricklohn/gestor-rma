@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
 }
 
 .login_container img{
@@ -11,9 +11,14 @@
     height: 350px;
 }
 
+.login_container h1{
+    margin-top: 5rem;
+}
+
+
 .login_logo_container{
-    width: 500px;
-    height: 700px;
+    width: 450px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +28,7 @@
 
 .login_form_container{
     width: 400px;
-    height: 700px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
