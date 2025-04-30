@@ -54,8 +54,12 @@ const RmaCreate = () => {
             <div className={classes.rmaCrate_form}>
                 <form onSubmit={(e) => {e.preventDefault(); console.log("teste") }}>
                     <label>
-                        <span>Descrição</span>
-                        <input type="text" required value={rma?.description}/>
+                        <span>Descrição:</span>
+                        <input type="text" required value={rma?.description || ""} onChange={(e) => {if(rma) {setRma({ ...rma, description: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Numero de Serie:</span>
+                        <input type="text" required value={rma?.serial_number || ""} onChange={(e) => {if(rma) {setRma({ ...rma, serial_number: e.target.value });}}}/>
                     </label>
                     {uuid ? <input type="submit" value="Salvar"/> : <input type="submit" value="Criar" />}
                 </form>
