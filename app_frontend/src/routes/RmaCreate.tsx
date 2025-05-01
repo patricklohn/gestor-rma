@@ -45,7 +45,30 @@ interface Person {
 const RmaCreate = () => {
     const navigate = useNavigate();
     const {uuid} = useParams();
-    const [rma, setRma] = useState<Rma | null>(null)
+    const emptyRma: Rma = {
+        uuid: '',
+        description: '',
+        serial_number: '',
+        change_sn: '',
+        data_start: '',
+        data_end: '',
+        data_buy: '',
+        productId: '',
+        supplierId: '',
+        clientId: '',
+        invoice: '',
+        invoice_arq: '',
+        change_inv: '',
+        invoice_arq_change: '',
+        client_prod: '',
+        status: '',
+        defect: '',
+        notes: '',
+        order_service: '',
+        createdAt: '',
+        updatedAt: '',
+      };
+    const [rma, setRma] = useState<Rma>(emptyRma)
   return (
     <div className={classes.rmaCreate}>
       <NavBar/>
@@ -59,7 +82,39 @@ const RmaCreate = () => {
                     </label>
                     <label>
                         <span>Numero de Serie:</span>
-                        <input type="text" required value={rma?.serial_number || ""} onChange={(e) => {if(rma) {setRma({ ...rma, serial_number: e.target.value });}}}/>
+                        <input type="text" value={rma?.serial_number || ""} onChange={(e) => {if(rma) {setRma({ ...rma, serial_number: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Numero de Serie novo:</span>
+                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Data de compra</span>
+                        <input type="date" required value={rma?.data_buy ? rma.data_buy.slice(0,10) : ""}  onChange={(e) => {if(rma) {setRma({ ...rma, data_buy: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Nota da empresa:</span>
+                        <input type="text" required value={rma?.invoice || ""} onChange={(e) => {if(rma) {setRma({ ...rma, invoice: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Nota de retorno:</span>
+                        <input type="text" required value={rma?.change_inv || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_inv: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Produto de cliente:</span>
+                        <input type="text" required value={rma?.client_prod || ""} onChange={(e) => {if(rma) {setRma({ ...rma, client_prod: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Defeito:</span>
+                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Notas:</span>
+                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Ordem de serviço:</span>
+                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
                     </label>
                     {uuid ? <input type="submit" value="Salvar"/> : <input type="submit" value="Criar" />}
                 </form>
