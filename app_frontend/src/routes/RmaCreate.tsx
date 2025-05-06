@@ -69,6 +69,31 @@ const RmaCreate = () => {
         updatedAt: '',
       };
     const [rma, setRma] = useState<Rma>(emptyRma)
+    const [searchProd, setSearchProd] = useState<String>("");
+    const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([]);
+    const [showSuggestionsProd, setShowSuggestionsProd] = useState(false);
+
+    useEffect(() => {
+        const delay = setTimeout(() =>{
+            if(searchProd.length >= 2){
+                RmaApi.get(`product/getAll?description=${searchProd}`).then((res)=>{
+                    setSuggestionsProd(res.data)
+                    setShowSuggestionsProd(true);
+                });
+            } else {
+                setSuggestionsProd([]);
+                setShowSuggestionsProd(false);
+            }
+        }, 300);
+        return () => clearTimeout(delay)
+    }, [searchProd])
+
+    const handleSelectProd = (prod: Produto) => {
+        setSearchProd(prod.description);
+        setRma({ ...rma, productId: prod.uuid})
+        setShowSuggestionsProd(false);
+    }
+
   return (
     <div className={classes.rmaCreate}>
       <NavBar/>
@@ -76,9 +101,18 @@ const RmaCreate = () => {
             {uuid ? (<h1>Edição de RMA</h1>) : (<h1>Criação de RMA</h1>)}
             <div className={classes.rmaCrate_form}>
                 <form onSubmit={(e) => {e.preventDefault(); console.log("teste") }}>
-                    <label>
+                    <label className={classes.rmaCreate_label_description}>
                         <span>Descrição:</span>
                         <input type="text" required value={rma?.description || ""} onChange={(e) => {if(rma) {setRma({ ...rma, description: e.target.value });}}}/>
+                    </label>
+                    <label>
+                        <span>Cliente:</span>
+                        <input type="text" value={searchProd} onChange={(e) => setSearchProd(e.target.value)} onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)} autoComplete='off'/>
+                        {showSuggestionsProd && suggestionsProd.length > 0 && (
+                            <ul>{suggestionsProd.map((prod) =>(
+                                <li key={prod.uuid} onDoubleClick={()=> handleSelectProd(prod)}>{prod.description}</li>
+                            ))}</ul>
+                        )}
                     </label>
                     <label>
                         <span>Numero de Serie:</span>
@@ -106,15 +140,15 @@ const RmaCreate = () => {
                     </label>
                     <label>
                         <span>Defeito:</span>
-                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
+                        <input type="text" required value={rma?.defect || ""} onChange={(e) => {if(rma) {setRma({ ...rma, defect: e.target.value });}}}/>
                     </label>
                     <label>
-                        <span>Notas:</span>
-                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
+                        <span>Anotações:</span>
+                        <input type="text" required value={rma?.notes || ""} onChange={(e) => {if(rma) {setRma({ ...rma, notes: e.target.value });}}}/>
                     </label>
                     <label>
                         <span>Ordem de serviço:</span>
-                        <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
+                        <input type="text" required value={rma?.order_service || ""} onChange={(e) => {if(rma) {setRma({ ...rma, order_service: e.target.value });}}}/>
                     </label>
                     {uuid ? <input type="submit" value="Salvar"/> : <input type="submit" value="Criar" />}
                 </form>
