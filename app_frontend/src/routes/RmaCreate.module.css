@@ -81,3 +81,8 @@
     background-color: var(--back-secondary);
     color: var(--secondary-color);
   }
+
+  .selectedItem {
+    background-color: var(--back-secondary);
+    color: var(--secondary-color)
+  }

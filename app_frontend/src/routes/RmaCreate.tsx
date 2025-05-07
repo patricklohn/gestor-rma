@@ -75,6 +75,8 @@ const RmaCreate = () => {
     const [showSuggestionsProd, setShowSuggestionsProd] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const blockSearch = useRef(false);
+    const [keyboardControl, setKeyboardControl] = useState(true);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     useEffect(() => {
         if(blockSearch.current){
@@ -123,15 +125,43 @@ const RmaCreate = () => {
                         onChange={(e) => setSearchProd(e.target.value)} 
                         onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)}
                         onBlur={() => setTimeout(() => setShowSuggestionsProd(false), 200)} 
+                        onMouseMove={() => setKeyboardControl(false)}
+                        onKeyDown={(e)=>{
+                            if(showSuggestionsProd && suggestionsProd.length > 0){
+                                setKeyboardControl(true);
+                                if (e.key === "ArrowDown") {
+                                    e.preventDefault();
+                                    setSelectedIndex((prev) =>
+                                      prev < suggestionsProd.length - 1 ? prev + 1 : 0
+                                    );
+                                  } else if (e.key === "ArrowUp") {
+                                    e.preventDefault();
+                                    setSelectedIndex((prev) =>
+                                      prev > 0 ? prev - 1 : suggestionsProd.length - 1
+                                    );
+                                  } else if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleSelectProd(suggestionsProd[selectedIndex]);
+                                  }
+                            }
+                        }}
                         autoComplete='off'/>
                         {showSuggestionsProd && suggestionsProd.length > 0 && (
                            <ul className={classes.suggestionList}>
                             <span>Selecione o produto abaixo:</span>
-                           {suggestionsProd.map((prod) => (
+                           {suggestionsProd.map((prod, index) => (
                              <li
                                key={prod.uuid}
                                onClick={() => handleSelectProd(prod)}
-                               className={classes.suggestionItem}
+                               onMouseEnter={() => setKeyboardControl(false)}
+                               className={
+                                  !keyboardControl && hoveredIndex === index
+                                  ? classes.selectedItem
+                                  : keyboardControl && index === selectedIndex
+                                  ? classes.selectedItem
+                                  : ""
+                              }
+                              onMouseOver={() => setHoveredIndex(index)}
                              >
                                {prod.description}
                              </li>
