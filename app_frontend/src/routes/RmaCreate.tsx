@@ -69,7 +69,7 @@ const RmaCreate = () => {
         updatedAt: '',
       };
     const [rma, setRma] = useState<Rma>(emptyRma)
-    const [searchProd, setSearchProd] = useState<String>("");
+    const [searchProd, setSearchProd] = useState<string>("");
     const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([]);
     const [showSuggestionsProd, setShowSuggestionsProd] = useState(false);
 
@@ -107,7 +107,7 @@ const RmaCreate = () => {
                     </label>
                     <label>
                         <span>Produto:</span>
-                        <input type="text" value={searchProd} onChange={(e) => setSearchProd(e.target.value)} onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)} autoComplete='off'/>
+                        <input type="text" value={searchProd} onChange={(e) => setSearchProd(e.target.value)} onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)} onBlur={() => setTimeout(() => setShowSuggestionsProd(false), 200)} autoComplete='off'/>
                         {showSuggestionsProd && suggestionsProd.length > 0 && (
                            <ul className={classes.suggestionList}>
                            {suggestionsProd.map((prod) => (
