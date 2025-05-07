@@ -69,11 +69,18 @@ const RmaCreate = () => {
         updatedAt: '',
       };
     const [rma, setRma] = useState<Rma>(emptyRma)
+
     const [searchProd, setSearchProd] = useState<string>("");
     const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([]);
     const [showSuggestionsProd, setShowSuggestionsProd] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const blockSearch = useRef(false);
 
     useEffect(() => {
+        if(blockSearch.current){
+            blockSearch.current = false;
+            return;
+        }
         const delay = setTimeout(() =>{
             if(searchProd.length >= 2){
                 RmaApi.get(`product/getDescription/${searchProd}`).then((res)=>{
@@ -89,9 +96,11 @@ const RmaCreate = () => {
     }, [searchProd])
 
     const handleSelectProd = (prod: Produto) => {
+        blockSearch.current = true;
         setSearchProd(prod.description);
         setRma({ ...rma, productId: prod.uuid})
         setShowSuggestionsProd(false);
+        console.log(rma.productId)
     }
 
   return (
@@ -105,13 +114,21 @@ const RmaCreate = () => {
                         <span>Descrição:</span>
                         <input type="text" required value={rma?.description || ""} onChange={(e) => setRma({ ...rma, serial_number: e.target.value })}/>
                     </label>
-                    <label>
+                    <div className={classes.rmaCreate_produto}>
+                        <h3>Informações do produto 📦</h3>
+                    <label className={classes.rmaCreate_label_produto}>
                         <span>Produto:</span>
-                        <input type="text" value={searchProd} onChange={(e) => setSearchProd(e.target.value)} onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)} onBlur={() => setTimeout(() => setShowSuggestionsProd(false), 200)} autoComplete='off'/>
+                        <input type="text" 
+                        value={searchProd} 
+                        onChange={(e) => setSearchProd(e.target.value)} 
+                        onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)}
+                        onBlur={() => setTimeout(() => setShowSuggestionsProd(false), 200)} 
+                        autoComplete='off'/>
                         {showSuggestionsProd && suggestionsProd.length > 0 && (
                            <ul className={classes.suggestionList}>
+                            <span>Selecione o produto abaixo:</span>
                            {suggestionsProd.map((prod) => (
-                             <li 
+                             <li
                                key={prod.uuid}
                                onClick={() => handleSelectProd(prod)}
                                className={classes.suggestionItem}
@@ -122,6 +139,7 @@ const RmaCreate = () => {
                          </ul>
                         )}
                     </label>
+                    <div>
                     <label>
                         <span>Numero de Serie:</span>
                         <input type="text" value={rma?.serial_number || ""} onChange={(e) => {if(rma) {setRma({ ...rma, serial_number: e.target.value });}}}/>
@@ -130,10 +148,12 @@ const RmaCreate = () => {
                         <span>Numero de Serie novo:</span>
                         <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
                     </label>
+                    </div>
                     <label>
                         <span>Data de compra</span>
                         <input type="date" required value={rma?.data_buy ? rma.data_buy.slice(0,10) : ""}  onChange={(e) => {if(rma) {setRma({ ...rma, data_buy: e.target.value });}}}/>
                     </label>
+                    </div>
                     <label>
                         <span>Nota da empresa:</span>
                         <input type="text" required value={rma?.invoice || ""} onChange={(e) => {if(rma) {setRma({ ...rma, invoice: e.target.value });}}}/>

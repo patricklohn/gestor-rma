@@ -32,14 +32,41 @@
     width: 350px;
 }
 
+.rmaCreate_produto{
+    display: flex;
+    margin: 2rem;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.rmaCreate_produto div{
+    margin: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.rmaCreate_produto ul span{
+    color: var(--back-primay);
+    padding: 1rem;
+}
+
+.rmaCreate_label_produto input{
+    width: 708px;
+}
+.rmaCreate_label_produto{
+    display: flex;
+    flex-direction: column;
+}
+
 .suggestionList {
-    position: absolute;
+    position: fixed;
+    width: 708px;
     z-index: 999;
-    background: white;
-    border: 1px solid #ccc;
+    background: var(--secondary-color);
+    border: 1px solid var(--back-primay);
     max-height: 200px;
-    overflow-y: auto;
-    margin-top: 4px;
+    margin-top: 3.5rem;
+    margin-left: 1rem;
     list-style: none;
     padding: 0;
   }
@@ -47,8 +74,10 @@
   .suggestionItem {
     padding: 8px;
     cursor: pointer;
+    color: var(--back-primay);
   }
   
   .suggestionItem:hover {
-    background-color: #eee;
+    background-color: var(--back-secondary);
+    color: var(--secondary-color);
   }
