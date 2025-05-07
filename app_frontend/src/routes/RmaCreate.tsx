@@ -76,7 +76,7 @@ const RmaCreate = () => {
     useEffect(() => {
         const delay = setTimeout(() =>{
             if(searchProd.length >= 2){
-                RmaApi.get(`product/getAll?description=${searchProd}`).then((res)=>{
+                RmaApi.get(`product/getDescription/${searchProd}`).then((res)=>{
                     setSuggestionsProd(res.data)
                     setShowSuggestionsProd(true);
                 });
@@ -103,15 +103,23 @@ const RmaCreate = () => {
                 <form onSubmit={(e) => {e.preventDefault(); console.log("teste") }}>
                     <label className={classes.rmaCreate_label_description}>
                         <span>Descrição:</span>
-                        <input type="text" required value={rma?.description || ""} onChange={(e) => {if(rma) {setRma({ ...rma, description: e.target.value });}}}/>
+                        <input type="text" required value={rma?.description || ""} onChange={(e) => setRma({ ...rma, serial_number: e.target.value })}/>
                     </label>
                     <label>
-                        <span>Cliente:</span>
+                        <span>Produto:</span>
                         <input type="text" value={searchProd} onChange={(e) => setSearchProd(e.target.value)} onFocus={()=> searchProd.length >= 2 && setShowSuggestionsProd(true)} autoComplete='off'/>
                         {showSuggestionsProd && suggestionsProd.length > 0 && (
-                            <ul>{suggestionsProd.map((prod) =>(
-                                <li key={prod.uuid} onDoubleClick={()=> handleSelectProd(prod)}>{prod.description}</li>
-                            ))}</ul>
+                           <ul className={classes.suggestionList}>
+                           {suggestionsProd.map((prod) => (
+                             <li 
+                               key={prod.uuid}
+                               onClick={() => handleSelectProd(prod)}
+                               className={classes.suggestionItem}
+                             >
+                               {prod.description}
+                             </li>
+                           ))}
+                         </ul>
                         )}
                     </label>
                     <label>

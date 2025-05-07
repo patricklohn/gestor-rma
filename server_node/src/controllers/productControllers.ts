@@ -55,6 +55,28 @@ async function getProductById(req: Request, res: Response){
     }
 }
 
+async function getProductByDescription(req: Request, res: Response){
+    try {
+        const description: string = req.params.description;
+        const productId = await prisma.product.findMany({
+            where: {
+                description: {
+                    contains: description,
+                    mode: 'insensitive',
+                }
+            },
+        })
+        if(!productId){
+            res.status(404).json({message: "Nenhum produto encontrado com essa busca!"})
+            return
+        } 
+        res.json(productId)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal server error"})
+    }
+}
+
 async function deleteProduct(req: Request, res: Response){
     try {
         const uuid: string = req.params.uuid;
@@ -97,6 +119,7 @@ export default {
     createProduct,
     getProductAll,
     getProductById,
+    getProductByDescription,
     deleteProduct,
     updateProduct
 }
