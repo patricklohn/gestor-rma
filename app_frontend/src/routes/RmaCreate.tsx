@@ -21,7 +21,7 @@ interface Rma {
     invoice_arq: string;
     change_inv: string;
     invoice_arq_change: string;
-    client_prod: string;
+    client_prod: boolean;
     status: string;
     defect: string; 
     notes: string;
@@ -60,7 +60,7 @@ const RmaCreate = () => {
         invoice_arq: '',
         change_inv: '',
         invoice_arq_change: '',
-        client_prod: '',
+        client_prod: false,
         status: '',
         defect: '',
         notes: '',
@@ -163,7 +163,7 @@ const RmaCreate = () => {
                               }
                               onMouseOver={() => setHoveredIndex(index)}
                              >
-                               {prod.description}
+                               <span>{prod.description}</span>
                              </li>
                            ))}
                          </ul>
@@ -179,11 +179,20 @@ const RmaCreate = () => {
                         <input type="text" required value={rma?.change_sn || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_sn: e.target.value });}}}/>
                     </label>
                     </div>
+                     <label>
+                        <span>Produto de cliente:</span> 
+                        <input type="checkbox" required checked={rma?.client_prod || false} onChange={(e) => {if(rma) {setRma({ ...rma, client_prod: e.target.checked });}}}/>
+                    </label>
+                    <label>
+                        <span>Defeito:</span>
+                        <input type="text" required value={rma?.defect || ""} onChange={(e) => {if(rma) {setRma({ ...rma, defect: e.target.value });}}}/>
+                    </label>
                     <label>
                         <span>Data de compra</span>
                         <input type="date" required value={rma?.data_buy ? rma.data_buy.slice(0,10) : ""}  onChange={(e) => {if(rma) {setRma({ ...rma, data_buy: e.target.value });}}}/>
                     </label>
                     </div>
+                    <div className={classes.rmaCreate_Fiscal}>
                     <label>
                         <span>Nota da empresa:</span>
                         <input type="text" required value={rma?.invoice || ""} onChange={(e) => {if(rma) {setRma({ ...rma, invoice: e.target.value });}}}/>
@@ -193,17 +202,11 @@ const RmaCreate = () => {
                         <input type="text" required value={rma?.change_inv || ""} onChange={(e) => {if(rma) {setRma({ ...rma, change_inv: e.target.value });}}}/>
                     </label>
                     <label>
-                        <span>Produto de cliente:</span>
-                        <input type="text" required value={rma?.client_prod || ""} onChange={(e) => {if(rma) {setRma({ ...rma, client_prod: e.target.value });}}}/>
-                    </label>
-                    <label>
-                        <span>Defeito:</span>
-                        <input type="text" required value={rma?.defect || ""} onChange={(e) => {if(rma) {setRma({ ...rma, defect: e.target.value });}}}/>
-                    </label>
-                    <label>
                         <span>Anotações:</span>
                         <input type="text" required value={rma?.notes || ""} onChange={(e) => {if(rma) {setRma({ ...rma, notes: e.target.value });}}}/>
                     </label>
+                    </div>
+                   
                     <label>
                         <span>Ordem de serviço:</span>
                         <input type="text" required value={rma?.order_service || ""} onChange={(e) => {if(rma) {setRma({ ...rma, order_service: e.target.value });}}}/>
