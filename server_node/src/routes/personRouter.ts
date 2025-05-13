@@ -8,5 +8,6 @@ personRouter.delete("/delete/:uuid", personControllers.deletePerson);
 personRouter.get("/getAll", personControllers.getAllPerson);
 personRouter.get("/getId/:uuid", personControllers.getPersonById);
 personRouter.put("/update/:uuid", personControllers.updatePerson);
+personRouter.get("/getName/:name", personControllers.getPersonByName);
 
 export default personRouter

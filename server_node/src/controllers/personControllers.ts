@@ -73,6 +73,24 @@ async function getPersonById(req: Request, res: Response){
     }
 }
 
+async function getPersonByName(req: Request, res: Response){
+    try {
+        const name: string = req.params.name;
+        const personName = await prisma.person.findMany({
+            where: {
+                name: {
+                    contains: name,
+                    mode: 'insensitive',
+                }
+            },
+        })  
+        res.json(personName)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal server error"})
+    }
+}
+
 async function updatePerson(req: Request, res: Response){
     try {
         const uuid: string = req.params.uuid;
@@ -99,5 +117,6 @@ export default {
     deletePerson,
     getAllPerson,
     getPersonById,
-    updatePerson
+    updatePerson,
+    getPersonByName,
 } 
