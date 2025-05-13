@@ -7,9 +7,9 @@ import upload from "../helpers/multerConfig"
 const warrantyRouter = Router();
 
 warrantyRouter.post("/create", upload.single('file') ,warrantyControllers.createWarranty);
+warrantyRouter.put("/update/:uuid",upload.single('file'), warrantyControllers.updateWanrranty);
 warrantyRouter.delete("/delete/:uuid", warrantyControllers.deleteWarranty);
 warrantyRouter.get("/getAll", warrantyControllers.getAllWarranty);
 warrantyRouter.get("/getId/:uuid", warrantyControllers.getAllWarrantyById);
-warrantyRouter.put("/update/:uuid", warrantyControllers.updateWanrranty);
 
 export default warrantyRouter;
