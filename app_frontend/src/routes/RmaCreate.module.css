@@ -54,6 +54,19 @@ input[type='file'] {
   outline: none;
 }
 
+select{
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 0.3rem;
+  color: var(--back-secondary);
+  outline: none;  
+}
+
+select option{
+    color: var(--back-secondary);
+}
+
 input[type='checkbox'] {
   margin-top: 0.8rem;
   transform: scale(1.2);

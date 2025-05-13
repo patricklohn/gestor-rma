@@ -244,6 +244,16 @@ const RmaCreate = () => {
             </label>
 
             <label>
+                <span>Status</span>
+                <select id='opcoes' value={rma.status} onChange={(e)=> setRma({...rma, status: e.target.value})}>
+                    <option value="Inicio">Inicio</option>
+                    <option value="Protocolo">Protocolo</option>
+                    <option value="Acumulando">Acumulando</option>
+                    <option value="Enviado">Enviado</option>
+                </select>
+            </label>
+
+            <label>
               <span>Data da Compra:</span>
               <input
                 type="date"
