@@ -37,6 +37,8 @@ interface Produto {
 interface Person{
     uuid: string
     name: string
+    client: boolean
+    supplier: boolean
 }
 
 const RmaCreate = () => {
@@ -75,6 +77,7 @@ const RmaCreate = () => {
   const [suggestionsPerson, setSuggestionsPerson] = useState<Person[]>([])
   const [showSuggestionsPerson, setShowSuggestionsPerson] = useState(false)
   const [selectedIndexPerson, setSelectedIndexPerson] = useState(0)
+  const [categoryPerson, setCategoryPerson] = useState('');
 
   const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
@@ -276,7 +279,7 @@ const RmaCreate = () => {
               />
               {showSuggestionsPerson && suggestionsPerson.length > 0 && (
                 <ul className={classes.suggestionList}>
-                  {suggestionsPerson.map((person, index) => (
+                  {suggestionsPerson.filter(person => person.client).map((person, index) => (
                     <li
                       key={person.uuid}
                       onClick={() => handleSelectPerson(person)}
