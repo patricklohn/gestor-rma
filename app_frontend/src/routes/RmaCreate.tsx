@@ -124,6 +124,13 @@ const RmaCreate = () => {
     setShowSuggestionsProd(false)
   }
 
+  const handleSelectPerson = (person: Person) =>{
+    blockSearch.current = true
+    setSearchPerson(person.name)
+    setRma({ ...rma, clientId: person.uuid})
+    setShowSuggestionsPerson(false);
+  }
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0])
@@ -255,6 +262,31 @@ const RmaCreate = () => {
                 value={rma.order_service}
                 onChange={(e) => setRma({ ...rma, order_service: e.target.value })}
               />
+            </label>
+
+            <label>
+              <span>Cliente:</span>
+              <input
+                type="text"
+                value={searchPerson}
+                onChange={(e) => setSearchPerson(e.target.value)}
+                onFocus={() => searchPerson.length >= 2 && setShowSuggestionsPerson(true)}
+                onBlur={() => setTimeout(() => setShowSuggestionsPerson(false), 200)}
+                autoComplete="off"
+              />
+              {showSuggestionsPerson && suggestionsPerson.length > 0 && (
+                <ul className={classes.suggestionList}>
+                  {suggestionsPerson.map((person, index) => (
+                    <li
+                      key={person.uuid}
+                      onClick={() => handleSelectPerson(person)}
+                      className={index === selectedIndex ? classes.selectedItem : ''}
+                    >
+                      {person.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </label>
 
             <label>
