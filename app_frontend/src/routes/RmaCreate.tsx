@@ -73,11 +73,15 @@ const RmaCreate = () => {
   const [showSuggestionsProd, setShowSuggestionsProd] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const [searchPerson, setSearchPerson] = useState('');
+  const [searchPerson, setSearchPerson] = useState(''); 
   const [suggestionsPerson, setSuggestionsPerson] = useState<Person[]>([])
   const [showSuggestionsPerson, setShowSuggestionsPerson] = useState(false)
   const [selectedIndexPerson, setSelectedIndexPerson] = useState(0)
-  const [categoryPerson, setCategoryPerson] = useState('');
+
+  const [searchPersonSupplier, setSearchPersonSupplier] = useState('');
+  const [suggestionsPersonSupplier, setSuggestionsPersonSupplier] = useState<Person[]>([])
+  const [showSuggestionsPersonSupplier, setShowSuggestionsPersonSupplier] = useState(false) 
+  const [selectedIndexPersonSupplier, setSelectedIndexPersonSupplier] = useState(0)
 
   const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
@@ -120,6 +124,25 @@ const RmaCreate = () => {
     return () => clearTimeout(delay)
   }, [searchPerson])
 
+  useEffect(() =>{
+    if (blockSearch.current) {
+      blockSearch.current = false
+      return
+    }
+    const delay = setTimeout(() => {
+      if (searchPersonSupplier.length >= 2) {
+        RmaApi.get(`person/getName/${searchPersonSupplier}`).then((res) => {
+          setSuggestionsPersonSupplier(res.data)
+          setShowSuggestionsPersonSupplier(true)
+        })
+      } else {
+        setSuggestionsPersonSupplier([])
+        setShowSuggestionsPersonSupplier(false)
+      }
+    }, 300)
+    return () => clearTimeout(delay)
+  }, [searchPersonSupplier])
+
   const handleSelectProd = (prod: Produto) => {
     blockSearch.current = true
     setSearchProd(prod.description)
@@ -127,11 +150,18 @@ const RmaCreate = () => {
     setShowSuggestionsProd(false)
   }
 
-  const handleSelectPerson = (person: Person) =>{
+  const handleSelectClient = (person: Person) =>{
     blockSearch.current = true
     setSearchPerson(person.name)
     setRma({ ...rma, clientId: person.uuid})
     setShowSuggestionsPerson(false);
+  }
+
+  const handleSelectSupplier = (person: Person) =>{
+    blockSearch.current = true
+    setSearchPersonSupplier(person.name)
+    setRma({ ...rma, supplierId: person.uuid})
+    setShowSuggestionsPersonSupplier(false);
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -282,7 +312,32 @@ const RmaCreate = () => {
                   {suggestionsPerson.filter(person => person.client).map((person, index) => (
                     <li
                       key={person.uuid}
-                      onClick={() => handleSelectPerson(person)}
+                      onClick={() => handleSelectClient(person)}
+                      className={index === selectedIndex ? classes.selectedItem : ''}
+                    >
+                      {person.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </label>
+
+            <label>
+              <span>Fornecedor:</span>
+              <input
+                type="text"
+                value={searchPersonSupplier}
+                onChange={(e) => setSearchPersonSupplier(e.target.value)}
+                onFocus={() => searchPersonSupplier.length >= 2 && setShowSuggestionsPersonSupplier(true)}
+                onBlur={() => setTimeout(() => setShowSuggestionsPersonSupplier(false), 200)}
+                autoComplete="off"
+              />
+              {showSuggestionsPersonSupplier && suggestionsPersonSupplier.length > 0 && (
+                <ul className={classes.suggestionList}>
+                  {suggestionsPersonSupplier.filter(person => person.supplier).map((person, index) => (
+                    <li
+                      key={person.uuid}
+                      onClick={() => handleSelectSupplier(person)}
                       className={index === selectedIndex ? classes.selectedItem : ''}
                     >
                       {person.name}
