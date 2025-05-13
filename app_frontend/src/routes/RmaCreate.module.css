@@ -51,6 +51,7 @@ input[type='file'] {
   border-radius: 8px;
   margin-top: 0.3rem;
   color: var(--back-secondary);
+  outline: none;
 }
 
 input[type='checkbox'] {
@@ -78,7 +79,7 @@ button:hover {
   position: absolute;
   background-color: #fff;
   border: 1px solid #ccc;
-  width: calc(100% - 1rem);
+  width: calc(35% - 1rem);
   max-height: 200px;
   overflow-y: auto;
   z-index: 10;

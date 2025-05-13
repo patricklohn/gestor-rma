@@ -34,6 +34,11 @@ interface Produto {
   description: string
 }
 
+interface Person{
+    uuid: string
+    name: string
+}
+
 const RmaCreate = () => {
   const navigate = useNavigate()
   const { uuid } = useParams()
@@ -65,6 +70,12 @@ const RmaCreate = () => {
   const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([])
   const [showSuggestionsProd, setShowSuggestionsProd] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const [searchPerson, setSearchPerson] = useState('');
+  const [suggestionsPerson, setSuggestionsPerson] = useState<Person[]>([])
+  const [showSuggestionsPerson, setShowSuggestionsPerson] = useState(false)
+  const [selectedIndexPerson, setSelectedIndexPerson] = useState(0)
+
   const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
 
@@ -86,6 +97,25 @@ const RmaCreate = () => {
     }, 300)
     return () => clearTimeout(delay)
   }, [searchProd])
+
+  useEffect(() =>{
+    if (blockSearch.current) {
+      blockSearch.current = false
+      return
+    }
+    const delay = setTimeout(() => {
+      if (searchPerson.length >= 2) {
+        RmaApi.get(`person/getName/${searchPerson}`).then((res) => {
+          setSuggestionsPerson(res.data)
+          setShowSuggestionsPerson(true)
+        })
+      } else {
+        setSuggestionsPerson([])
+        setShowSuggestionsPerson(false)
+      }
+    }, 300)
+    return () => clearTimeout(delay)
+  }, [searchPerson])
 
   const handleSelectProd = (prod: Produto) => {
     blockSearch.current = true
