@@ -3,6 +3,7 @@ import classes from './RmaCreate.module.css'
 import { useEffect, useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import RmaApi from '../axios/config'
+import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 
 interface Rma {
@@ -82,6 +83,8 @@ const RmaCreate = () => {
   const [suggestionsPersonSupplier, setSuggestionsPersonSupplier] = useState<Person[]>([])
   const [showSuggestionsPersonSupplier, setShowSuggestionsPersonSupplier] = useState(false) 
   const [selectedIndexPersonSupplier, setSelectedIndexPersonSupplier] = useState(0)
+
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
@@ -165,23 +168,43 @@ const RmaCreate = () => {
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0])
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files);
+      setSelectedFiles((prev) => [...prev, ...filesArray]);
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const formData = new FormData()
-    Object.entries(rma).forEach(([key, value]) => {
-      formData.append(key, value)
-    })
-    if (file) {
-      formData.append('file', file)
+    selectedFiles.forEach((file) => {
+    formData.append("files", file); // "files" como array
+  });
+    try {
+      if(uuid){
+        const res = await RmaApi.put(`/warranty/update/${uuid}`, rma);
+        if(res.status === 200){
+        toast.success(res.data.message)
+        }
+      }else{
+        const res = await RmaApi.post(`/warranty/create`, rma);
+        if(res.status === 200){
+        toast.success(res.data.message)
+        }
+        }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data?.message || 'Erro da API')
+        toast.error(error.response?.data?.message || 'Erro da API')
+      } else if (error instanceof Error) {
+        console.error(error.message)
+        toast.error(error instanceof Error)
+      } else {
+        console.error('Erro desconhecido')
+        toast.error('Erro desconhecido')
+      }
     }
-    toast.success(uuid ? 'RMA atualizado!' : 'RMA criado com sucesso!')
-    // RmaApi.post(...) ou put dependendo do UUID
-  }
+    }
 
   return (
     <div className={classes.rmaCreate}>
@@ -368,7 +391,7 @@ const RmaCreate = () => {
 
             <label>
               <span>Arquivo:</span>
-              <input type="file" onChange={handleFileChange} />
+              <input type="file" multiple onChange={handleFileChange} />
             </label>
           </div>
           <button type="submit">{uuid ? 'Salvar' : 'Criar RMA'}</button>
