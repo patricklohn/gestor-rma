@@ -111,7 +111,7 @@ async function updateWanrranty(req: Request, res: Response){
             return
         }
         if(!defect){
-            res.status(400).json({message: "O campo DEFITO é obrigatório!"})
+            res.status(400).json({message: "O campo DEFEITO é obrigatório!"})
             return
         }
 
