@@ -11,9 +11,9 @@ interface Rma {
   description: string
   serial_number: string
   change_sn: string
-  data_start: string
-  data_end: string
-  data_buy: string
+  data_start: string | null
+  data_end: string | null
+  data_buy: string | null
   productId: string
   supplierId: string
   clientId: string
@@ -51,7 +51,30 @@ const RmaCreate = () => {
     serial_number: '',
     change_sn: '',
     data_start: '',
-    data_end: '',
+    data_end: null,
+    data_buy: '',
+    productId: '',
+    supplierId: '',
+    clientId: '',
+    invoice: '',
+    invoice_arq: '',
+    change_inv: '',
+    invoice_arq_change: '',
+    client_prod: false,
+    status: '',
+    defect: '',
+    notes: '',
+    order_service: '',
+    createdAt: '',
+    updatedAt: '',
+  })
+  const [rmaEnvio, setRmaEnvio] = useState<Rma>({
+    uuid: '',
+    description: '',
+    serial_number: '',
+    change_sn: '',
+    data_start: '',
+    data_end: null,
     data_buy: '',
     productId: '',
     supplierId: '',
@@ -88,6 +111,15 @@ const RmaCreate = () => {
 
   const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
+
+  const getDataAtualForm = () =>{
+    const hoje = new Date();
+    const ano = String(hoje.getFullYear());
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2,'0');
+
+    return `${ano}-${mes}-${dia}`
+  }
 
   useEffect(() => {
     if (blockSearch.current) {
@@ -146,6 +178,10 @@ const RmaCreate = () => {
     return () => clearTimeout(delay)
   }, [searchPersonSupplier])
 
+  useEffect(() => {
+
+  }, [rma]);
+
   const handleSelectProd = (prod: Produto) => {
     blockSearch.current = true
     setSearchProd(prod.description)
@@ -169,13 +205,17 @@ const RmaCreate = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const filesArray = Array.from(e.target.files);
+      const filesArray = Array.from(e.target.files) || null;
       setSelectedFiles((prev) => [...prev, ...filesArray]);
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!rma.description || !rma.productId || !rma.clientId || !rma.supplierId) {
+      toast.error("Preencha todos os campos obrigatórios!")
+      return
+    }
     const formData = new FormData()
     selectedFiles.forEach((file) => {
     formData.append("files", file); // "files" como array
@@ -185,11 +225,16 @@ const RmaCreate = () => {
         const res = await RmaApi.put(`/warranty/update/${uuid}`, rma);
         if(res.status === 200){
         toast.success(res.data.message)
+        navigate("/rma")
         }
       }else{
-        const res = await RmaApi.post(`/warranty/create`, rma);
+        const date = getDataAtualForm(); 
+        setRmaEnvio({...rma, data_start: date})
+        setRma(rmaEnvio);
+        const res = await RmaApi.post(`/warranty/create`, rmaEnvio);
         if(res.status === 200){
         toast.success(res.data.message)
+        navigate("/rma")
         }
         }
     } catch (error: unknown) {
@@ -392,6 +437,9 @@ const RmaCreate = () => {
             <label>
               <span>Arquivo:</span>
               <input type="file" multiple onChange={handleFileChange} />
+              {selectedFiles.map((file, index) => (
+              <p style={{color:'#000'}} key={index}>{file.name}</p>
+              ))}
             </label>
           </div>
           <button type="submit">{uuid ? 'Salvar' : 'Criar RMA'}</button>
