@@ -14,9 +14,9 @@ interface Rma {
   data_start: string | null
   data_end: string | null
   data_buy: string | null
-  productId: string
-  supplierId: string
-  clientId: string
+  product: string
+  supplier: string
+  client: string
   invoice: string
   invoice_arq: string
   change_inv: string
@@ -50,18 +50,18 @@ const RmaCreate = () => {
     description: '',
     serial_number: '',
     change_sn: '',
-    data_start: '',
+    data_start: null,
     data_end: null,
-    data_buy: '',
-    productId: '',
-    supplierId: '',
-    clientId: '',
+    data_buy: null,
+    product: '',
+    supplier: '',
+    client: '',
     invoice: '',
     invoice_arq: '',
     change_inv: '',
     invoice_arq_change: '',
     client_prod: false,
-    status: '',
+    status: 'Inicio',
     defect: '',
     notes: '',
     order_service: '',
@@ -73,12 +73,12 @@ const RmaCreate = () => {
     description: '',
     serial_number: '',
     change_sn: '',
-    data_start: '',
+    data_start: null,
     data_end: null,
-    data_buy: '',
-    productId: '',
-    supplierId: '',
-    clientId: '',
+    data_buy: null,
+    product: '',
+    supplier: '',
+    client: '',
     invoice: '',
     invoice_arq: '',
     change_inv: '',
@@ -118,7 +118,7 @@ const RmaCreate = () => {
     const mes = String(hoje.getMonth() + 1).padStart(2, '0');
     const dia = String(hoje.getDate()).padStart(2,'0');
 
-    return `${ano}-${mes}-${dia}`
+    return `${ano}-${mes}-${dia}T00:00:00.000Z`
   }
 
   useEffect(() => {
@@ -185,21 +185,21 @@ const RmaCreate = () => {
   const handleSelectProd = (prod: Produto) => {
     blockSearch.current = true
     setSearchProd(prod.description)
-    setRma({ ...rma, productId: prod.uuid })
+    setRma({ ...rma, product: prod.uuid })
     setShowSuggestionsProd(false)
   }
 
   const handleSelectClient = (person: Person) =>{
     blockSearch.current = true
     setSearchPerson(person.name)
-    setRma({ ...rma, clientId: person.uuid})
+    setRma({ ...rma, client: person.uuid})
     setShowSuggestionsPerson(false);
   }
 
   const handleSelectSupplier = (person: Person) =>{
     blockSearch.current = true
     setSearchPersonSupplier(person.name)
-    setRma({ ...rma, supplierId: person.uuid})
+    setRma({ ...rma, supplier: person.uuid})
     setShowSuggestionsPersonSupplier(false);
   }
 
@@ -212,10 +212,10 @@ const RmaCreate = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!rma.description || !rma.productId || !rma.clientId || !rma.supplierId) {
-      toast.error("Preencha todos os campos obrigatórios!")
-      return
-    }
+    // if (!rma.description || !rma.product || !rma.client || !rma.supplier) {
+    //   toast.error("Preencha todos os campos obrigatórios!")
+    //   return
+    // }
     const formData = new FormData()
     selectedFiles.forEach((file) => {
     formData.append("files", file); // "files" como array
@@ -232,7 +232,7 @@ const RmaCreate = () => {
         setRmaEnvio({...rma, data_start: date})
         setRma(rmaEnvio);
         const res = await RmaApi.post(`/warranty/create`, rmaEnvio);
-        if(res.status === 200){
+        if(res.status === 201){
         toast.success(res.data.message)
         navigate("/rma")
         }
@@ -326,7 +326,7 @@ const RmaCreate = () => {
               <input
                 type="date"
                 value={rma.data_buy?.slice(0, 10)}
-                onChange={(e) => setRma({ ...rma, data_buy: e.target.value })}
+                onChange={(e) => setRma({ ...rma, data_buy: e.target.value + "T00:00:00.000Z" })}
               />
             </label>
 
