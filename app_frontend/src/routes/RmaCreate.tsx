@@ -68,29 +68,6 @@ const RmaCreate = () => {
     createdAt: '',
     updatedAt: '',
   })
-  const [rmaEnvio, setRmaEnvio] = useState<Rma>({
-    uuid: '',
-    description: '',
-    serial_number: '',
-    change_sn: '',
-    data_start: null,
-    data_end: null,
-    data_buy: null,
-    product: '',
-    supplier: '',
-    client: '',
-    invoice: '',
-    invoice_arq: '',
-    change_inv: '',
-    invoice_arq_change: '',
-    client_prod: false,
-    status: '',
-    defect: '',
-    notes: '',
-    order_service: '',
-    createdAt: '',
-    updatedAt: '',
-  })
 
   const [searchProd, setSearchProd] = useState('')
   const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([])
@@ -121,7 +98,47 @@ const RmaCreate = () => {
     return `${ano}-${mes}-${dia}T00:00:00.000Z`
   }
 
-  useEffect(() => {
+  const buscaRma = async (uuid:string) => {
+    try {
+        const res = await RmaApi.get(`http://localhost:4000/warranty/getId/${uuid}`);
+        const rmaData = res.data; 
+        const formatDate = (dateStr: string | null) => dateStr ? dateStr.slice(0, 10) : "";
+
+        setRma({
+        uuid: rmaData.uuid,
+        description: rmaData.description || "",
+        serial_number: rmaData.serial_number || "",
+        data_start: formatDate(rmaData.data_start),
+        data_end: formatDate(rmaData.data_end),
+        data_buy: formatDate(rmaData.data_buy),
+        invoice: rmaData.invoice || "",
+        invoice_arq: rmaData.invoice_arq || "",
+        status: rmaData.status || "",
+        defect: rmaData.defect || "",
+        notes: rmaData.notes || "",
+        order_service: rmaData.order_service || "",
+
+        // Assumindo que a resposta tem os objetos relacionados já com uuid:
+        product: rmaData.productId ? { uuid: rmaData.productId.uuid } : null,
+        client: rmaData.clientId ? { uuid: rmaData.clientId.uuid } : null,
+        supplier: rmaData.supplierId ? { uuid: rmaData.supplierId.uuid } : null,
+      });
+
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data?.message || 'Erro da API')
+        toast.error(error.response?.data?.message || 'Erro da API')
+      } else if (error instanceof Error) {
+        console.error(error.message)
+        toast.error(error instanceof Error)
+      } else {
+        console.error('Erro desconhecido')
+        toast.error('Erro desconhecido')
+      }
+    }
+  }
+  
+  useEffect(() => {// BUSCA PRODUTO
     if (blockSearch.current) {
       blockSearch.current = false
       return
@@ -140,7 +157,7 @@ const RmaCreate = () => {
     return () => clearTimeout(delay)
   }, [searchProd])
 
-  useEffect(() =>{
+  useEffect(() =>{//BUSCA CLIENTE
     if (blockSearch.current) {
       blockSearch.current = false
       return
@@ -159,7 +176,7 @@ const RmaCreate = () => {
     return () => clearTimeout(delay)
   }, [searchPerson])
 
-  useEffect(() =>{
+  useEffect(() =>{//BUSCA FORNECEDOR
     if (blockSearch.current) {
       blockSearch.current = false
       return
@@ -178,9 +195,11 @@ const RmaCreate = () => {
     return () => clearTimeout(delay)
   }, [searchPersonSupplier])
 
-  useEffect(() => {
-
-  }, [rma]);
+  useEffect(() => {//BUSCA RMA EDIÇÃO
+    if(uuid){
+      buscaRma(uuid);
+    }
+  },[])
 
   const handleSelectProd = (prod: Produto) => {
     blockSearch.current = true
@@ -229,9 +248,8 @@ const RmaCreate = () => {
         }
       }else{
         const date = getDataAtualForm(); 
-        setRmaEnvio({...rma, data_start: date})
-        setRma(rmaEnvio);
-        const res = await RmaApi.post(`/warranty/create`, rmaEnvio);
+        const rmaNew = {...rma, data_start: date};
+        const res = await RmaApi.post(`/warranty/create`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message)
         navigate("/rma")
