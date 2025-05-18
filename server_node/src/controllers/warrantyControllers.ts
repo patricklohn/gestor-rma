@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function createWarranty(req: Request, res: Response){
     try {
         const {description, serial_number, data_start, data_end, data_buy, 
-            product, supplier,client, invoice, invoice_arq, status, defect,notes, order_service} = req.body;
+            product, supplier,client, invoice, invoice_arq, status, defect,notes, order_service, client_prod} = req.body;
 
         if (!description) {
             res.status(400).json({message: "O campo DESCRIÇÃO é obrigatório!"});
@@ -32,6 +32,7 @@ async function createWarranty(req: Request, res: Response){
                 defect, 
                 notes,
                 order_service,
+                client_prod,
                 product:{
                     connect:{
                         uuid: product
@@ -104,7 +105,7 @@ async function updateWanrranty(req: Request, res: Response){
     try {
         const uuid: string = req.params.uuid;
         const {description, serial_number, data_start, data_end, data_buy, 
-            product, supplier,client, invoice, invoice_arq, status, defect,notes, order_service} = req.body;
+            product, supplier,client, invoice, invoice_arq, status, defect,notes, order_service, client_prod} = req.body;
         
         if (!description) {
             res.status(400).json({message: "O campo DESCRIÇÃO é obrigatório!"});
@@ -131,6 +132,7 @@ async function updateWanrranty(req: Request, res: Response){
                 defect, 
                 notes,
                 order_service,
+                client_prod,
                 product:{
                     connect:{
                         uuid: product

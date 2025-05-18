@@ -166,6 +166,7 @@ const RmaCreate = () => {
   }, [uuid])
 
   useEffect(() => {
+    console.log(rmaData)
       if(rmaData && Object.keys(rmaData).length > 0){
         setRma({
           uuid: rmaData.uuid || '',
@@ -191,7 +192,6 @@ const RmaCreate = () => {
         // Preencher os campos de busca
     if (rmaData.productId) {
       RmaApi.get(`product/getId/${rmaData.productId}`).then((res) => {
-        console.log(res)
         setSearchProd(res.data[0].description);
         setShowAuthSuggestionsP(false)
       });
@@ -199,7 +199,6 @@ const RmaCreate = () => {
     
     if (rmaData.clientId) {
       RmaApi.get(`person/getId/${rmaData.clientId}`).then((res) => {
-        console.log(res)
         setSearchPerson(res.data[0].name);
         setShowAuthSuggestionsC(false)
       });
@@ -207,7 +206,6 @@ const RmaCreate = () => {
     
     if (rmaData.supplierId) {
       RmaApi.get(`person/getId/${rmaData.supplierId}`).then((res) => {
-        console.log(res)
         setSearchPersonSupplier(res.data[0].name);
         setShowAuthSuggestionsS(false)
       });
@@ -255,9 +253,9 @@ const RmaCreate = () => {
   });
     try {
       if(uuid){
-        const date = rma.data_start + "T00:00:00.000Z"; 
+        const date = rma.data_start + "T00:00:00.000Z";
         const rmaNew = {...rma, data_start: date};
-        console.log(date)
+        console.log(rmaNew)
         const res = await RmaApi.put(`/warranty/update/${uuid}`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message || "Atualizado com sucesso")
@@ -353,7 +351,7 @@ const RmaCreate = () => {
 
             <label>
                 <span>Status</span>
-                <select id='opcoes' value={rma.status} onChange={(e)=> setRma({...rma, status: e.target.value})}>
+                <select id='opcoes' value={rma?.status || ""} onChange={(e)=> setRma({...rma, status: e.target.value})}>
                     <option value="Inicio">Inicio</option>
                     <option value="Protocolo">Protocolo</option>
                     <option value="Acumulando">Acumulando</option>
@@ -375,7 +373,7 @@ const RmaCreate = () => {
               <input
                 type="checkbox"
                 checked={rma.client_prod}
-                onChange={(e) => setRma({ ...rma, client_prod: e.target.checked })}
+                onChange={(e) => setRma({ ...rma, client_prod: e.target.checked ? true : false })}
               />
             </label>
 
