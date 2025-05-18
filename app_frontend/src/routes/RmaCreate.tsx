@@ -53,16 +53,19 @@ const RmaCreate = () => {
   const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([])
   const [showSuggestionsProd, setShowSuggestionsProd] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [showAuthSuggestionsP, setShowAuthSuggestionsP] = useState(true)
 
   const [searchPerson, setSearchPerson] = useState(''); 
   const [suggestionsPerson, setSuggestionsPerson] = useState<Person[]>([])
   const [showSuggestionsPerson, setShowSuggestionsPerson] = useState(false)
   const [selectedIndexPerson, setSelectedIndexPerson] = useState(0)
+  const [showAuthSuggestionsC, setShowAuthSuggestionsC] = useState(true)
 
   const [searchPersonSupplier, setSearchPersonSupplier] = useState('');
   const [suggestionsPersonSupplier, setSuggestionsPersonSupplier] = useState<Person[]>([])
   const [showSuggestionsPersonSupplier, setShowSuggestionsPersonSupplier] = useState(false) 
   const [selectedIndexPersonSupplier, setSelectedIndexPersonSupplier] = useState(0)
+  const [showAuthSuggestionsS, setShowAuthSuggestionsS] = useState(true)
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -185,9 +188,31 @@ const RmaCreate = () => {
           notes: rmaData.notes || '',
           order_service: rmaData.order_service || '',
         })
-      }
-      console.log(rma)
-      console.log(rmaData)
+        // Preencher os campos de busca
+    if (rmaData.productId) {
+      RmaApi.get(`product/getId/${rmaData.productId}`).then((res) => {
+        console.log(res)
+        setSearchProd(res.data[0].description);
+        setShowAuthSuggestionsP(false)
+      });
+    }
+    
+    if (rmaData.clientId) {
+      RmaApi.get(`person/getId/${rmaData.clientId}`).then((res) => {
+        console.log(res)
+        setSearchPerson(res.data[0].name);
+        setShowAuthSuggestionsC(false)
+      });
+    }
+    
+    if (rmaData.supplierId) {
+      RmaApi.get(`person/getId/${rmaData.supplierId}`).then((res) => {
+        console.log(res)
+        setSearchPersonSupplier(res.data[0].name);
+        setShowAuthSuggestionsS(false)
+      });
+    }
+  }
   },[rmaData])
 
   const handleSelectProd = (prod: Produto) => {
@@ -283,12 +308,17 @@ const RmaCreate = () => {
               <input
                 type="text"
                 value={searchProd}
-                onChange={(e) => setSearchProd(e.target.value)}
+                onChange={
+                  (e) => {
+                    setSearchProd(e.target.value)
+                    setShowAuthSuggestionsP(true)
+                  }
+                }
                 onFocus={() => searchProd.length >= 2 && setShowSuggestionsProd(true)}
                 onBlur={() => setTimeout(() => setShowSuggestionsProd(false), 200)}
                 autoComplete="off"
               />
-              {showSuggestionsProd && suggestionsProd.length > 0 && (
+              {showSuggestionsProd && suggestionsProd.length > 0 && showAuthSuggestionsP && (
                 <ul className={classes.suggestionList}>
                   {suggestionsProd.map((prod, index) => (
                     <li
@@ -390,12 +420,15 @@ const RmaCreate = () => {
               <input
                 type="text"
                 value={searchPerson}
-                onChange={(e) => setSearchPerson(e.target.value)}
+                onChange={(e) => {
+                  setSearchPerson(e.target.value)
+                  setShowAuthSuggestionsC(true)
+                }}
                 onFocus={() => searchPerson.length >= 2 && setShowSuggestionsPerson(true)}
                 onBlur={() => setTimeout(() => setShowSuggestionsPerson(false), 200)}
                 autoComplete="off"
               />
-              {showSuggestionsPerson && suggestionsPerson.length > 0 && (
+              {showSuggestionsPerson && suggestionsPerson.length > 0 && showAuthSuggestionsC && (
                 <ul className={classes.suggestionList}>
                   {suggestionsPerson.filter(person => person.client).map((person, index) => (
                     <li
@@ -415,12 +448,16 @@ const RmaCreate = () => {
               <input
                 type="text"
                 value={searchPersonSupplier}
-                onChange={(e) => setSearchPersonSupplier(e.target.value)}
+                onChange={
+                  (e) => {
+                    setSearchPersonSupplier(e.target.value)
+                    setShowAuthSuggestionsS(true)
+                  }}
                 onFocus={() => searchPersonSupplier.length >= 2 && setShowSuggestionsPersonSupplier(true)}
                 onBlur={() => setTimeout(() => setShowSuggestionsPersonSupplier(false), 200)}
                 autoComplete="off"
               />
-              {showSuggestionsPersonSupplier && suggestionsPersonSupplier.length > 0 && (
+              {showSuggestionsPersonSupplier && suggestionsPersonSupplier.length > 0 && showAuthSuggestionsS && (
                 <ul className={classes.suggestionList}>
                   {suggestionsPersonSupplier.filter(person => person.supplier).map((person, index) => (
                     <li
