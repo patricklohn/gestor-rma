@@ -82,7 +82,7 @@ const Produtos = () => {
           <div className={classes.produtos_search}>
             <input
             type="text"
-            placeholder="Pesquisar por nome ou email"
+            placeholder="Pesquisar por Descrição ou Observação"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}/>
           </div>
