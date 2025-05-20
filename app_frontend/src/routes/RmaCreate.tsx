@@ -52,24 +52,24 @@ const RmaCreate = () => {
   const [searchProd, setSearchProd] = useState('')
   const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([])
   const [showSuggestionsProd, setShowSuggestionsProd] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex] = useState(0)
   const [showAuthSuggestionsP, setShowAuthSuggestionsP] = useState(true)
 
   const [searchPerson, setSearchPerson] = useState(''); 
   const [suggestionsPerson, setSuggestionsPerson] = useState<Person[]>([])
   const [showSuggestionsPerson, setShowSuggestionsPerson] = useState(false)
-  const [selectedIndexPerson, setSelectedIndexPerson] = useState(0)
+  //const [selectedIndexPerson, setSelectedIndexPerson] = useState(0)
   const [showAuthSuggestionsC, setShowAuthSuggestionsC] = useState(true)
 
   const [searchPersonSupplier, setSearchPersonSupplier] = useState('');
   const [suggestionsPersonSupplier, setSuggestionsPersonSupplier] = useState<Person[]>([])
   const [showSuggestionsPersonSupplier, setShowSuggestionsPersonSupplier] = useState(false) 
-  const [selectedIndexPersonSupplier, setSelectedIndexPersonSupplier] = useState(0)
+  //const [selectedIndexPersonSupplier, setSelectedIndexPersonSupplier] = useState(0)
   const [showAuthSuggestionsS, setShowAuthSuggestionsS] = useState(true)
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const [file, setFile] = useState<File | null>(null)
+  //const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
 
   const getDataAtualForm = () =>{

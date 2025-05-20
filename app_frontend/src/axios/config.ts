@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const RmaApi = axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: "https://gestor-rma.onrender.com",
     headers:{
         "Content-Type": "application/json",
     }
