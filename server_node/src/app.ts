@@ -7,7 +7,7 @@ import fs from "fs";
 
 const app = express();
 app.use(cors({
-    origin: "https://gestor-h3s3i69xd-patricklohns-projects.vercel.app",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 app.use(express.json());
