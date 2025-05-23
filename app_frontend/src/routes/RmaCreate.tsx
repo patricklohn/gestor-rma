@@ -83,7 +83,7 @@ const RmaCreate = () => {
 
   const buscaRma = async (uuid:string) => {
     try {
-        const res = await RmaApi.get(`/warranty/getId/${uuid}`);
+        const res = await RmaApi.get(`warranty/getId/${uuid}`);
         if(!res.data[0]){0
           toast.error('Nenhum dado encontrado!')
         }
