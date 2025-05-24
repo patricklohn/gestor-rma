@@ -253,17 +253,18 @@ const RmaCreate = () => {
   });
     try {
       if(uuid){
-        const date = rma.data_start + "T00:00:00.000Z";
-        const rmaNew = {...rma, data_start: date};
-        console.log(rmaNew)
+        const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
+        const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
+        const rmaNew  = {...rma, data_start: date, data_buy: dateBuy};
         const res = await RmaApi.put(`/warranty/update/${uuid}`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message || "Atualizado com sucesso")
         navigate("/rma")
         }
       }else{
-        const date = getDataAtualForm(); 
-        const rmaNew = {...rma, data_start: date};
+        const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
+        const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
+        const rmaNew = {...rma, data_start: date, data_buy: dateBuy};
         const res = await RmaApi.post(`/warranty/create`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message)
@@ -351,7 +352,7 @@ const RmaCreate = () => {
 
             <label>
                 <span>Status</span>
-                <select id='opcoes' value={rma?.status || ""} onChange={(e)=> setRma({...rma, status: e.target.value})}>
+                <select id='opcoes' value={rma?.status} onChange={(e)=> setRma({...rma, status: e.target.value})}>
                     <option value="Inicio">Inicio</option>
                     <option value="Protocolo">Protocolo</option>
                     <option value="Acumulando">Acumulando</option>
@@ -364,7 +365,7 @@ const RmaCreate = () => {
               <input
                 type="date"
                 value={rma.data_buy?.slice(0, 10)}
-                onChange={(e) => setRma({ ...rma, data_buy: e.target.value + "T00:00:00.000Z" })}
+                onChange={(e) => setRma({ ...rma, data_buy: e.target.value})}
               />
             </label>
 
