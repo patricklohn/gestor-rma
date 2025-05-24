@@ -369,7 +369,7 @@ const RmaCreate = () => {
             </label>
 
             <label>
-              <span>Produto do cliente:</span>
+              <span>Produto de loja:</span>
               <input
                 type="checkbox"
                 checked={rma.client_prod}
