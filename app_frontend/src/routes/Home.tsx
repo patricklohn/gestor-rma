@@ -2,6 +2,7 @@ import NavBar from "../components/NavBar"
 import classes from "./Home.module.css"
 import {decodeToken} from "../helpers/authLogin"
 
+
 const Home = () => {
   const user = decodeToken()
   if (!user){
