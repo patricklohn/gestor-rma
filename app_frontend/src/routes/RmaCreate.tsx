@@ -262,9 +262,10 @@ const RmaCreate = () => {
         navigate("/rma")
         }
       }else{
+        const statusInicio: string = rma.status || 'Inicio'; 
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
-        const rmaNew = {...rma, data_start: date, data_buy: dateBuy};
+        const rmaNew = {...rma, data_start: date, data_buy: dateBuy, status: statusInicio};
         const res = await RmaApi.post(`/warranty/create`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message)
@@ -354,6 +355,7 @@ const RmaCreate = () => {
                 <span>Status</span>
                 <select id='opcoes' value={rma?.status} onChange={(e)=> setRma({...rma, status: e.target.value})}>
                     <option value="Inicio">Inicio</option>
+                    <option value="Manutenção">Manutenção</option>
                     <option value="Protocolo">Protocolo</option>
                     <option value="Acumulando">Acumulando</option>
                     <option value="Enviado">Enviado</option>
