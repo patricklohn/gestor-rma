@@ -255,9 +255,10 @@ const RmaCreate = () => {
       if(uuid){
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
-        let dataEnd: string | undefined = undefined;
+        let dataEnd: string | null = null;
         if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado') {
-          dataEnd = rma.data_end ? rma.data_end + "T00:00:00.000Z" : getDataAtualForm();
+          dataEnd= rma.data_end ? rma.data_end + "T00:00:00.000Z" : getDataAtualForm();
+          rma.data_end = dataEnd;
         }
         const rmaNew  = {...rma, data_start: date, data_buy: dateBuy, data_end: dataEnd};
         const res = await RmaApi.put(`/warranty/update/${uuid}`, rmaNew);
@@ -361,12 +362,12 @@ const RmaCreate = () => {
                     <option value="Inicio">Inicio</option>
                     <option value="Manutenção">Manutenção</option>
                     <option value="Protocolo">Protocolo</option>
-                    <option value="Protocolo">Protocolo Manutenção</option>
+                    <option value="Protocolo Manutenção">Protocolo Manutenção</option>
                     <option value="Acumulando">Acumulando</option>
                     <option value="Enviado">Enviado</option>
-                    <option value="Enviado">Enviado Manutenção</option>
+                    <option value="Enviado Manutenção">Enviado Manutenção</option>
                     <option value="Finalizado">Finalizado</option>
-                    <option value="Finalizado">Finalizado Manutenção</option>
+                    <option value="Finalizado Manutenção">Finalizado Manutenção</option>
                 </select>
             </label>
 

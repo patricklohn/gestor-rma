@@ -170,7 +170,7 @@ const Rma = () => {
                 <th>{rma.description}</th>
                 <th>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto não encontrado'}</th>
                 <th>{formatarData(rma.data_start)}</th>
-                <th>{rma.data_end === null ? "Não definido" : formatarData(rma.data_start)}</th>
+                <th>{rma.data_end === null ? "Não definido" : formatarData(rma.data_end)}</th>
                 <th>{rma.client_prod === false ? "❌" : "✅"}</th>
                 <th>{person.find((p) => p.uuid === rma.supplierId)?.name || "Fornecedor não encotrado"}</th>
                 <th>{person.find((p) => p.uuid === rma.clientId)?.name || "Cliente não encotrado"}</th>
