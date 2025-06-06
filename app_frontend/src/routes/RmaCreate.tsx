@@ -357,9 +357,12 @@ const RmaCreate = () => {
                     <option value="Inicio">Inicio</option>
                     <option value="Manutenção">Manutenção</option>
                     <option value="Protocolo">Protocolo</option>
+                    <option value="Protocolo">Protocolo Manutenção</option>
                     <option value="Acumulando">Acumulando</option>
                     <option value="Enviado">Enviado</option>
+                    <option value="Enviado">Enviado Manutenção</option>
                     <option value="Finalizado">Finalizado</option>
+                    <option value="Finalizado">Finalizado Manutenção</option>
                 </select>
             </label>
 
