@@ -255,7 +255,11 @@ const RmaCreate = () => {
       if(uuid){
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
-        const rmaNew  = {...rma, data_start: date, data_buy: dateBuy};
+        let dataEnd: string | undefined = undefined;
+        if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado') {
+          dataEnd = rma.data_end ? rma.data_end + "T00:00:00.000Z" : getDataAtualForm();
+        }
+        const rmaNew  = {...rma, data_start: date, data_buy: dateBuy, data_end: dataEnd};
         const res = await RmaApi.put(`/warranty/update/${uuid}`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message || "Atualizado com sucesso")
