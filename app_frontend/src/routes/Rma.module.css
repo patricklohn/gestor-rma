@@ -52,7 +52,7 @@
 }
 
 .rma_list table{
-    width: 1350px;
+    width: 1500px;
     border: 1px solid var(--back-secondary);
     border-radius: 10px;
     border-collapse: separate;

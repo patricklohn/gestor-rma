@@ -152,6 +152,7 @@ const Rma = () => {
         {filterRma.length > 0 && (
           <table>
             <tr>
+              <th>Codigo</th>
               <th>Produto</th>
               <th>Data Inicio</th>
               <th>Data Finalização</th>
@@ -159,12 +160,14 @@ const Rma = () => {
               <th>Fornecedor</th>
               <th>Cliente</th>
               <th>Nota</th>
+              <th>Data de Compra</th>
               <th>Status</th>
               <th>Ordem de serviço</th>
-              <th>Avançar</th>
+              <th>Editar</th>
             </tr>
             {filterRma.map((rma: any)=>(
               <tr key={rma.uuid} onDoubleClickCapture={() => navigate(`/rma/create/${rma.uuid}`)}>
+                <th>{rma.description}</th>
                 <th>{produtos.find((p) => p.uuid === rma.productId)?.description || 'Produto não encontrado'}</th>
                 <th>{formatarData(rma.data_start)}</th>
                 <th>{rma.data_end === null ? "Não definido" : formatarData(rma.data_start)}</th>
@@ -172,9 +175,10 @@ const Rma = () => {
                 <th>{person.find((p) => p.uuid === rma.supplierId)?.name || "Fornecedor não encotrado"}</th>
                 <th>{person.find((p) => p.uuid === rma.clientId)?.name || "Cliente não encotrado"}</th>
                 <th>{rma.invoice}</th>
+                <th>{rma.data_buy ? formatarData(rma.data_buy) : 'Não definido'}</th>
                 <th>{rma.status}</th>
                 <th>{rma.order_service}</th>
-                <th style={{cursor: "pointer"}} onClick={() => navigate(`/rma/create/${rma.uuid}`)}>⏩</th>
+                <th style={{cursor: "pointer"}} onClick={() => navigate(`/rma/create/${rma.uuid}`)}>✏️</th>
               </tr>
             ))}
           </table>
