@@ -198,7 +198,7 @@ const Rma = () => {
                 <select onChange={(e) => setSortField(e.target.value as any)}>
                   <option value="">Nenhum</option>
                   <option value="data_start">Data Início</option>
-                  <option value="data_end">Data Finalização</option>
+                  {/* <option value="data_end">Data Finalização</option> */}
                   <option value="cliente">Cliente</option>
                   <option value="produto">Produto</option>
                 </select>
