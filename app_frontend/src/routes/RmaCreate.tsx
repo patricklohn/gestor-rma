@@ -5,6 +5,8 @@ import { toast } from 'react-toastify'
 import RmaApi from '../axios/config'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
+import { FaExclamationCircle } from 'react-icons/fa';
+
 
 interface Rma {
   uuid: string
@@ -305,7 +307,7 @@ const RmaCreate = () => {
         <form className={classes.form} onSubmit={handleSubmit}>
           <div className={classes.grid}>
             <label>
-              <span>Descrição:</span>
+              <span>° Descrição:</span>
               <input
                 type="text"
                 required
@@ -363,7 +365,7 @@ const RmaCreate = () => {
             </label>
 
             <label>
-                <span>Status</span>
+                <span>° Status</span>
                 <select id='opcoes' value={rma?.status} onChange={(e)=> setRma({...rma, status: e.target.value})}>
                     <option value="Inicio">Inicio</option>
                     <option value="Manutenção">Manutenção</option>
@@ -397,8 +399,9 @@ const RmaCreate = () => {
             </label>
 
             <label>
-              <span>Defeito:</span>
+              <span>° Defeito:</span>
               <input
+                required
                 type="text"
                 value={rma.defect}
                 onChange={(e) => setRma({ ...rma, defect: e.target.value })}
