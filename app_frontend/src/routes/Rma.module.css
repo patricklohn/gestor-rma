@@ -1,69 +1,148 @@
-.rma{
+/* Layout principal */
+.rma {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #121212;
+  min-height: 100vh;
+  color: #f1f1f1;
+}
+
+.rma_container {
+  width: 100%;
+  max-width: 1400px;
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.rma_container h1{
+    color: var(--back-secondary);
+}
+
+/* Seção de criação */
+.rma_create {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.rma_btn_create {
+  background-color: var(--back-secondary);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rma_btn_create:hover {
+  background-color: #444;
+}
+
+/* Seção da lista */
+.rma_list {
+  margin-top: 3rem;
+}
+
+.rma_list h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Filtros */
+.produtos_search {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.produtos_search div {
     display: flex;
-    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-.rma_container{
-    margin: 0 auto;
+.produtos_search div div {
+    display: flex;
+    flex-direction: column;
 }
 
-.rma_create{
-    padding-top: 4rem;
+.produtos_search input,
+.produtos_search select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+  transition: border-color 0.2s;
+  width: 250px;
 }
 
-.rma_btn_create{
-    background-color: var(--back-secondary) !important;
-    margin-top: 2rem;
-    border: none;
-    cursor: pointer;
-    padding: 1rem;
-    border-radius: 10px;
-    transition: .5s;
-    font-size: 1.2rem;
-    opacity: 0.5;
+.produtos_search input:focus,
+.produtos_search select:focus {
+  border-color: var(--back-secondary);
+  outline: none;
 }
 
-.rma_btn_create:hover{
-    opacity: 1;
+/* Tabela */
+.rma_list table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  color: #f1f1f1;
 }
 
-.rma_list{
-    margin-top: 4rem;
+.rma_list table thead {
+  background-color: var(--back-secondary);
+  color: #fff;
 }
 
-.rma_list h2{
-    margin-top: 4rem;
-    text-align: center;
+.rma_list table th,
+.rma_list table td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border: 1px solid #333;
 }
 
-.produtos_search{
-    width: 350px;
-    margin: 0 auto;
+.rma_list table tbody tr:nth-child(even) {
+  background-color: #2c2c2c;
 }
 
-.rma_list input{
-    border: none;
-    outline: none;
-    text-align: center;
-    width: 100%;
-    margin:2rem 0;
-    background-color: var(--primary-color);
-    border-bottom: 1px solid var(--back-secondary);
+.rma_list table tbody tr:hover {
+  background-color: #3a3a3a;
+  cursor: pointer;
 }
 
-.rma_list table{
-    width: 1500px;
-    border: 1px solid var(--back-secondary);
-    border-radius: 10px;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    margin-bottom: 5rem;
+/* Feedback e loading */
+#loading-screen {
+  margin-top: 2rem;
 }
 
-.rma_listo table td,
-.rma_list table th{
-    text-align: center;
-    border: 1px solid var(--back-secondary);
-    padding: .5rem;
+.loading-spinner {
+  border: 4px solid #444;
+  border-top: 4px solid var(--back-secondary);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
