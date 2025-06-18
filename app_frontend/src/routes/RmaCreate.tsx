@@ -5,7 +5,6 @@ import { toast } from 'react-toastify'
 import RmaApi from '../axios/config'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
-import { FaExclamationCircle } from 'react-icons/fa';
 
 
 interface Rma {
