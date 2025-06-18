@@ -256,12 +256,13 @@ const RmaCreate = () => {
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
         let dataEnd: string | null = null;
-        if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado') {
+        if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado' || rma.status === 'Finalizado Sem Garantia') {
           dataEnd= rma.data_end ? rma.data_end + "T00:00:00.000Z" : getDataAtualForm();
           rma.data_end = dataEnd;
         }
         const rmaNew  = {...rma, data_start: date, data_buy: dateBuy, data_end: dataEnd};
         const res = await RmaApi.put(`/warranty/update/${uuid}`, rmaNew);
+
         if(res.status === 201){
         toast.success(res.data.message || "Atualizado com sucesso")
         navigate("/rma")
@@ -270,7 +271,12 @@ const RmaCreate = () => {
         const statusInicio: string = rma.status || 'Inicio'; 
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
-        const rmaNew = {...rma, data_start: date, data_buy: dateBuy, status: statusInicio};
+        let dataEnd: string | null = null;
+        if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado' || rma.status === 'Finalizado Sem Garantia') {
+          dataEnd= rma.data_end ? rma.data_end + "T00:00:00.000Z" : getDataAtualForm();
+          rma.data_end = dataEnd;
+        }
+        const rmaNew  = {...rma, data_start: date, data_buy: dateBuy, status: statusInicio, data_end: dataEnd};
         const res = await RmaApi.post(`/warranty/create`, rmaNew);
         if(res.status === 201){
         toast.success(res.data.message)
@@ -367,6 +373,7 @@ const RmaCreate = () => {
                     <option value="Enviado">Enviado</option>
                     <option value="Enviado Manutenção">Enviado Manutenção</option>
                     <option value="Finalizado">Finalizado</option>
+                    <option value="Finalizado Sem Garantia">Finalizado Sem Garantia</option>
                     <option value="Finalizado Manutenção">Finalizado Manutenção</option>
                 </select>
             </label>
