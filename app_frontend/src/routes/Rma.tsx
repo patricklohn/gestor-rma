@@ -176,7 +176,18 @@ const Rma = () => {
                 <th>{person.find((p) => p.uuid === rma.clientId)?.name || "Cliente não encotrado"}</th>
                 <th>{rma.invoice}</th>
                 <th>{rma.data_buy ? formatarData(rma.data_buy) : 'Não definido'}</th>
-                <th>{rma.status}</th>
+                <th>
+                  {rma.status === "Inicio" ? (<span style={{color:"#007bff"}}>Iniciando</span>) : false}
+                  {rma.status === "Manutenção" ? (<span style={{color:"#007bff"}}>Manutenção</span>) : false}
+                  {rma.status === "Protocolo" ? (<span style={{color:"#fd7e14"}}>Protocolo</span>) : false}
+                  {rma.status === "Protocolo Manutenção" ? (<span style={{color:"#fd7e14"}}>Protocolo Manutenção</span>) : false}
+                  {rma.status === "Acumulando" ? (<span style={{color:"#FFFF00"}}>Acumulando</span>) : false}
+                  {rma.status === "Enviado" ? (<span style={{color:"#20c997"}}>Enviado</span>) : false}
+                  {rma.status === "Enviado Manutenção" ? (<span style={{color:"#20c997"}}>Enviado Manutenção</span>) : false}
+                  {rma.status === "Finalizado" ? (<span style={{color:"#28a745"}}>Enviado</span>) : false}
+                  {rma.status === "Finalizado Manutenção" ? (<span style={{color:"#28a745"}}>Finalizado Manutenção</span>) : false}
+                  {rma.status === "Finalizado Sem Garantia" ? (<span style={{color:"#dc3545"}}>Sem Garantia</span>) : false}
+                </th>
                 <th>{rma.order_service}</th>
                 <th style={{cursor: "pointer"}} onClick={() => navigate(`/rma/create/${rma.uuid}`)}>✏️</th>
               </tr>
