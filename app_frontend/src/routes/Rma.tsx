@@ -190,7 +190,7 @@ const Rma = () => {
                 <option value="Enviado Manutenção">Enviado Manutenção</option>
                 <option value="Finalizado">Finalizado</option>
                 <option value="Finalizado Manutenção">Finalizado Manutenção</option>
-                <option value="Finalizado Sem Garantia">Finalizado Sem Garantia</option>
+                <option value="Sem Garantia">Sem Garantia</option>
               </select>
 
               <div>
@@ -245,6 +245,7 @@ const Rma = () => {
                     <td>
                       <span style={{ color: 
                         rma.status.includes("Finalizado") ? "#28a745" :
+                        rma.status.includes("Sem Garantia") ? "#FF6347 " :
                         rma.status.includes("Manutenção") ? "#007bff" :
                         rma.status.includes("Protocolo") ? "#fd7e14" :
                         rma.status === "Acumulando" ? "#FFFF00" :

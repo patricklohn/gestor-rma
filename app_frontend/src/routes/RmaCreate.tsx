@@ -257,7 +257,7 @@ const RmaCreate = () => {
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
         let dataEnd: string | null = null;
-        if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado' || rma.status === 'Finalizado Sem Garantia') {
+        if (rma.status === 'Finalizado Manutenção' || rma.status === 'Finalizado' || rma.status === 'Sem Garantia') {
           dataEnd= rma.data_end ? rma.data_end + "T00:00:00.000Z" : getDataAtualForm();
           rma.data_end = dataEnd;
         }
@@ -373,8 +373,8 @@ const RmaCreate = () => {
                     <option value="Acumulando">Acumulando</option>
                     <option value="Enviado">Enviado</option>
                     <option value="Enviado Manutenção">Enviado Manutenção</option>
+                    <option value="Sem Garantia">Sem Garantia</option>
                     <option value="Finalizado">Finalizado</option>
-                    <option value="Finalizado Sem Garantia">Finalizado Sem Garantia</option>
                     <option value="Finalizado Manutenção">Finalizado Manutenção</option>
                 </select>
             </label>
