@@ -86,14 +86,23 @@ const Rma = () => {
     }
   };
 
-  const formatarData = (data: string) => {
-    return new Date(data).toLocaleString('pt-BR', {
-      timeZone: 'America/Sao_Paulo',
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-  };
+  const formatarData = (dataISO: string): string => {
+  const date = new Date(dataISO);
+  const somarDias = 0;
+
+  // Cria nova data com os mesmos valores em UTC, mas tratados como locais
+  const ano = date.getUTCFullYear();
+  const mes = date.getUTCMonth();      // 0-based
+  const dia = date.getUTCDate() + somarDias;
+
+  const dataCorrigida = new Date(ano, mes, dia); // Modo local
+
+  return dataCorrigida.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+};
 
   const sortRmaList = (list: any[]) => {
     if (!sortField) return list;
