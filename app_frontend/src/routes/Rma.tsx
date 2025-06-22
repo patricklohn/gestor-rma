@@ -228,14 +228,14 @@ const Rma = () => {
                   <th>Código</th>
                   <th>Produto</th>
                   <th>Data Início</th>
-                  <th>Data Finalização</th>
-                  <th>Produto de loja</th>
+                  <th>Finalização</th>
+                  <th>Loja</th>
                   <th>Fornecedor</th>
                   <th>Cliente</th>
                   <th>Nota</th>
-                  <th>Data de Compra</th>
+                  <th>Compra</th>
                   <th>Status</th>
-                  <th>Ordem de serviço</th>
+                  <th>OS</th>
                   <th>Editar</th>
                 </tr>
               </thead>
