@@ -26,7 +26,7 @@ const Rma = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([
     "Inicio", "Manutenção", "Protocolo", "Protocolo Manutenção", "Acumulando", "Enviado", "Enviado Manutenção"
   ]);
-  const [sortField, setSortField] = useState<'data_start' | 'data_end' | 'cliente' | 'produto' | ''>('');
+  const [sortField, setSortField] = useState<'data_start' | 'data_end' | 'cliente' | 'produto' | '' | 'fornecedor'>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   const loadRma = async () => {
@@ -114,6 +114,11 @@ const Rma = () => {
       if (sortField === 'cliente') {
         aValue = person.find(p => p.uuid === a.clientId)?.name || '';
         bValue = person.find(p => p.uuid === b.clientId)?.name || '';
+      }
+
+      if (sortField === 'fornecedor') {
+        aValue = person.find(p => p.uuid === a.supplierId)?.name || '';
+        bValue = person.find(p => p.uuid === b.supplierId)?.name || '';
       }
 
       if (sortField === 'produto') {
@@ -207,8 +212,10 @@ const Rma = () => {
                 <select onChange={(e) => setSortField(e.target.value as any)}>
                   <option value="">Nenhum</option>
                   <option value="data_start">Data Início</option>
-                  {/* <option value="data_end">Data Finalização</option> */}
+                  <option value="data_end">Data Finalização</option>
+                  <option value="data_buy">Data Compra</option>
                   <option value="cliente">Cliente</option>
+                  <option value="fornecedor">Fornecedor</option>
                   <option value="produto">Produto</option>
                 </select>
 
