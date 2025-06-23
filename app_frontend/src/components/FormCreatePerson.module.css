@@ -32,7 +32,8 @@
 
 .formPerson_form form label span,
 .formPerson_form form label input,
-.formPerson_form form input[type = "submit"]{
+.formPerson_form form input[type = "submit"],
+.formPerson_form form textarea{
     color: var(--primary-color);
 }
 
@@ -54,8 +55,20 @@
     cursor: pointer;
 }
 
-.formPerson_form form input{
+.formPerson_form form input,
+.formPerson_form form textarea{
     background-color: transparent;
+}
+
+.formPerson_form textarea{
+    outline: none;
+    animation: none;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 .formPerson_form form input[type = "submit"]{

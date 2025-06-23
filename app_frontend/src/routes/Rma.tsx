@@ -179,9 +179,6 @@ const Rma = () => {
         </div>
         <div className={classes.rma_list}>
           <h2>Lista RMA</h2>
-          {isFetching.current && <div id="loading-screen"><div className="loading-spinner"></div></div>}
-          {!filteredAndSortedRma.length && <p>Não há registros cadastrados</p>}
-
           <div className={classes.produtos_search}>
             <input
               type="text"
@@ -227,7 +224,8 @@ const Rma = () => {
               
             </div>
           </div>
-
+          {isFetching.current && <div id="loading-screen"><div className="loading-spinner"></div></div>}
+          {!filteredAndSortedRma.length && <p>Não há registros cadastrados</p>}
           {filteredAndSortedRma.length > 0 && (
             <table>
               <thead>

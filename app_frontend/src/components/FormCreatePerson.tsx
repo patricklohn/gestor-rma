@@ -13,12 +13,14 @@ interface Props {
     email: string;
     client: boolean;
     supplier: boolean;
+    observation: string;
   }
 }
 
 const FormCreatePerson = ({personToEdit, onSuccess }: Props) => {
   const [name, setName] = useState(personToEdit?.name || '');
   const [email, setEmail] = useState(personToEdit?.email || '');
+  const [observation, setObservation] = useState(personToEdit?.observation || '');
   const [isCliente, setIsCliente] = useState(personToEdit?.client || false);
   const [isSupplier, setIsSupplier] = useState(personToEdit?.supplier || false);
 
@@ -27,6 +29,7 @@ const FormCreatePerson = ({personToEdit, onSuccess }: Props) => {
   const resetForm = () => {
     setName('');
     setEmail('');
+    setObservation('');
     setIsCliente(false);
     setIsSupplier(false);
   };
@@ -39,7 +42,8 @@ const FormCreatePerson = ({personToEdit, onSuccess }: Props) => {
         name: name,
         email: email,
         client: isCliente,
-        supplier: isSupplier
+        supplier: isSupplier,
+        observation: observation
       }
 
       if(isEditing){
@@ -98,6 +102,10 @@ const FormCreatePerson = ({personToEdit, onSuccess }: Props) => {
                 <input type="checkbox" checked={isSupplier} onChange={(e) => setIsSupplier(e.target.checked)}/>
               </label>
             </div>
+            <label>
+              <span>Observação:</span>
+              <textarea value={observation} onChange={(e) => setObservation(e.target.value)}></textarea>
+            </label>
             {isEditing ? (<input type="submit" value="Editar"/>) : (<input type="submit" value="Cadastrar"/>) }
           </form>
         </div>
