@@ -69,7 +69,7 @@ const RmaCreate = () => {
   //const [selectedIndexPersonSupplier, setSelectedIndexPersonSupplier] = useState(0)
   const [showAuthSuggestionsS, setShowAuthSuggestionsS] = useState(true)
 
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   //const [file, setFile] = useState<File | null>(null)
   const blockSearch = useRef(false)
@@ -236,12 +236,12 @@ const RmaCreate = () => {
     setShowSuggestionsPersonSupplier(false);
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files) || null;
-      setSelectedFiles((prev) => [...prev, ...filesArray]);
-    }
-  }
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const filesArray = Array.from(e.target.files) || null;
+  //     setSelectedFiles((prev) => [...prev, ...filesArray]);
+  //   }
+  // }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -249,10 +249,10 @@ const RmaCreate = () => {
     //   toast.error("Preencha todos os campos obrigatórios!")
     //   return
     // }
-    const formData = new FormData()
-    selectedFiles.forEach((file) => {
-    formData.append("files", file); // "files" como array
-  });
+    // const formData = new FormData()
+    // selectedFiles.forEach((file) => {
+    // formData.append("files", file); // "files" como array
+    // });
     try {
       if(uuid){
         setIsFetching(true)
