@@ -9,7 +9,7 @@ import authenticateTokenPermission from '../middlewares/autenticacaoPermissao';
 
 
 const routes = Router();
-routes.use("/person", authenticateTokenPermission, personRouter);
+routes.use("/person", authenticateToken, personRouter);
 routes.use("/product", authenticateToken, productRouter);
 routes.use("/warranty", authenticateToken, warrantyRouter);
 routes.use("/user", authenticateToken, userRouter);
