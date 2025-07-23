@@ -96,6 +96,10 @@
   outline: none;
 }
 
+.rma_status{
+  height: 200px;
+}
+
 /* Tabela */
 .rma_list table {
   width: 100%;

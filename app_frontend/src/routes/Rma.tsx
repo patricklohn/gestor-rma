@@ -188,7 +188,7 @@ const Rma = () => {
             />
             <div>
               <label style={{color:"#FFF"}}>Status:</label>
-              <select multiple value={selectedStatuses} onChange={(e) => {
+              <select className={classes.rma_status} multiple value={selectedStatuses} onChange={(e) => {
                 const options = Array.from(e.target.selectedOptions, o => o.value);
                 setSelectedStatuses(options);
               }}>
