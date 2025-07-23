@@ -504,13 +504,13 @@ const RmaCreate = () => {
               />
             </label>
 
-            <label>
+            {/* <label>
               <span>Arquivo:</span>
               <input type="file" multiple onChange={handleFileChange} />
               {selectedFiles.map((file, index) => (
               <p style={{color:'#000'}} key={index}>{file.name}</p>
               ))}
-            </label>
+            </label> */}
           </div>
           { isFetching ? (
             <button type="submit" disabled>{uuid ? 'Salvando...' : 'Criando Rma...'}</button>
