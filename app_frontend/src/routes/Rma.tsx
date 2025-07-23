@@ -277,6 +277,7 @@ const Rma = () => {
               </tbody>
             </table>
           )}
+          <span>{filteredAndSortedRma.length}</span>
         </div>
       </div>
     </div>
