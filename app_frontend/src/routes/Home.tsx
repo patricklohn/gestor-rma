@@ -13,7 +13,7 @@ const Home = () => {
     <div className={classes.home}>
       <NavBar />
       <div className={classes.home_container}>
-        <h1>Bem vindo {user.name || "Usuario"}</h1>
+        <h1 style={{color: "#fff"}}>Bem vindo {user.name || "Usuario"}</h1>
       </div>
     </div>
   )
