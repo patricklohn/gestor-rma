@@ -271,7 +271,7 @@ const Rma = () => {
                       </span>
                     </td>
                     <td>{rma.order_service}</td>
-                    <td style={{ cursor: "pointer" }} onClick={() => navigate(`/rma/create/${rma.uuid}`)}>✏️</td>
+                    <td style={{ cursor: "pointer" }}><a style={{textDecoration:"none"}} href={`/rma/create/${rma.uuid}`}>✏️</a></td>
                   </tr>
                 ))}
               </tbody>
