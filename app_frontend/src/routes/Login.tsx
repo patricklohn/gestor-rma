@@ -1,6 +1,6 @@
 import classes from './Login.module.css'
 import logo from '../assets/LogoA.png'
-import { useState } from 'react'
+import { useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import RmaApi from '../axios/config'
@@ -11,13 +11,16 @@ const Login = () => {
   const[email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
+  const [isFetching, setIsFetching] = useState(false);
 
   const handleSubmit = async(e: React.FormEvent) =>{
     e.preventDefault();
     try {
+      setIsFetching(true);
       const response = await RmaApi.post('/login/userLogin', {email, password: senha});
       if(response.status === 401){
         toast.error(response.data.message)
+        setIsFetching(false);
       }
       if(response.status === 200){
         const { token} = response.data;
@@ -28,6 +31,7 @@ const Login = () => {
     } catch(error: unknown){
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message || 'Erro da API');
+        setIsFetching(false);
       } else if (error instanceof Error) {
         toast.error(error.message);
       } else {
@@ -53,7 +57,9 @@ const Login = () => {
             <label htmlFor="">Senha</label>
             <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required />
           </div>
-          <input type="submit" value="Entrar"/>
+          { isFetching == true ? (
+            <input type="submit" value="Carregando..." disabled />
+        ) : (<input type="submit" value="Entrar"/>)}
         </form>
       </div>
     </div>

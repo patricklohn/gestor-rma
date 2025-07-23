@@ -49,6 +49,7 @@ const RmaCreate = () => {
   const { uuid } = useParams()
   const [rmaData, setRmaData] = useState<Rma>();
   const [rma, setRma] = useState<Partial<Rma>>({})
+  const [isFetching, setIsFetching] = useState(false)
 
   const [searchProd, setSearchProd] = useState('')
   const [suggestionsProd, setSuggestionsProd] = useState<Produto[]>([])
@@ -254,6 +255,7 @@ const RmaCreate = () => {
   });
     try {
       if(uuid){
+        setIsFetching(true)
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
         let dataEnd: string | null = null;
@@ -269,6 +271,7 @@ const RmaCreate = () => {
         navigate("/rma")
         }
       }else{
+        setIsFetching(true)
         const statusInicio: string = rma.status || 'Inicio'; 
         const date: string = uuid ? rma.data_start + "T00:00:00.000Z" : getDataAtualForm();
         const dateBuy: string | null = rma.data_buy ? rma.data_buy + "T00:00:00.000Z" : null;
@@ -295,6 +298,7 @@ const RmaCreate = () => {
         console.error('Erro desconhecido')
         toast.error('Erro desconhecido')
       }
+      setIsFetching(false)
     }
     }
 
@@ -508,7 +512,11 @@ const RmaCreate = () => {
               ))}
             </label>
           </div>
-          <button type="submit">{uuid ? 'Salvar' : 'Criar RMA'}</button>
+          { isFetching ? (
+            <button type="submit" disabled>{uuid ? 'Salvando...' : 'Criando Rma...'}</button>
+          ) : (
+            <button type="submit">{uuid ? 'Salvar' : 'Criar Rma'}</button>
+          )}
         </form>
       </div>
     </div>
